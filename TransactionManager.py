@@ -81,9 +81,7 @@ class FinanceManager:
             note=""
     ):
 
-        # ==========================
-        # Kiểm tra dữ liệu
-        # ==========================
+
 
         self._check_transaction_id(transaction_id)
 
@@ -94,18 +92,11 @@ class FinanceManager:
         year = check_date.year
         month = check_date.month
 
-        # ==========================
         # Lấy dữ liệu tháng
-        # ==========================
-
         month_data = self._month_index.get_or_create(year, month)
 
         transaction_index = HashMap.TransactionIndex(month_data)
         category_index = HashMap.CategoryIndex(month_data)
-
-        # ==========================
-        # Tạo Transaction
-        # ==========================
 
         transaction = model.Transaction(
             transaction_id,
@@ -116,10 +107,6 @@ class FinanceManager:
             note
         )
 
-        # ==========================
-        # Thêm Transaction
-        # ==========================
-
         transaction_index.add(transaction)
 
         # Thêm vào TransactionMap
@@ -128,10 +115,6 @@ class FinanceManager:
             year,
             month
         )
-
-        # ==========================
-        # Lấy hoặc tạo CategoryState
-        # ==========================
 
         category_state = category_index.get(category.id)
 
@@ -162,10 +145,8 @@ class FinanceManager:
             new_amount=amount,
             mode="add"
         )
-
-        # ==========================
+        
         # Kiểm tra Budget
-        # ==========================
 
         if (
             isinstance(category_state, model.ExpenseState)
@@ -176,10 +157,7 @@ class FinanceManager:
         print("Transaction added successfully.")
 
     def delete_transaction(self, transaction_id):
-
-        # ==========================
         # Kiểm tra Transaction
-        # ==========================
 
         location = self._transaction_map.get(transaction_id)
 
@@ -187,27 +165,19 @@ class FinanceManager:
             raise ValueError("Transaction does not exist.")
 
         year, month = location
-
-        # ==========================
         # Lấy dữ liệu tháng
-        # ==========================
 
         month_data = self._month_index.get(year, month)
 
         transaction_index = HashMap.TransactionIndex(month_data)
         category_index = HashMap.CategoryIndex(month_data)
 
-        # ==========================
         # Tìm Transaction
-        # ==========================
 
         index = transaction_index.find_by_id(transaction_id)
 
         transaction = transaction_index._transactions[index]
-
-        # ==========================
         # Cập nhật CategoryState
-        # ==========================
 
         category_state = category_index.get(transaction.category_id)
 
@@ -215,17 +185,11 @@ class FinanceManager:
             old_amount=transaction.amount,
             mode="delete"
         )
-
-        # ==========================
         # Xóa Transaction
-        # ==========================
 
         transaction_index.remove(transaction_id)
 
-        # ==========================
         # Xóa khỏi TransactionMap
-        # ==========================
-
         self._transaction_map.remove(transaction_id)
 
         print("Transaction deleted successfully.")
@@ -238,10 +202,7 @@ class FinanceManager:
             category_id,
             note=""
     ):
-
-        # ==========================
         # Kiểm tra Transaction
-        # ==========================
 
         location = self._transaction_map.get(transaction_id)
 
@@ -249,10 +210,7 @@ class FinanceManager:
             raise ValueError("Transaction does not exist.")
 
         old_year, old_month = location
-
-        # ==========================
         # Kiểm tra dữ liệu mới
-        # ==========================
 
         self._check_amount(amount)
         check_date = self._check_date(date)
@@ -260,10 +218,7 @@ class FinanceManager:
 
         new_year = check_date.year
         new_month = check_date.month
-
-        # ==========================
         # Lấy dữ liệu tháng cũ
-        # ==========================
 
         old_month_data = self._month_index.get(old_year, old_month)
 
@@ -277,10 +232,8 @@ class FinanceManager:
         transaction = old_transaction_index._transactions[index]
         old_category_id = transaction.category_id
         old_category_state = old_category_index.get(old_category_id)
-
-        # ====================================================
+        
         # TRƯỜNG HỢP 1: ĐỔI THÁNG
-        # ====================================================
 
         if old_year != new_year or old_month != new_month:
 
