@@ -9,15 +9,6 @@ class ReportManager:
         self._month_index = month_index
 
     def generate_monthly_report(self, year, month):
-        """
-        In báo cáo tài chính tháng ra Terminal:
-        - Tổng hợp Thu, Chi, Thặng dư trong kỳ.
-        - Vẽ biểu đồ tỷ lệ phần trăm chi tiêu giữa các nhóm bằng ký tự văn bản.
-        - Liệt kê danh sách các mục chi tiêu vượt hạn mức (Budget).
-        """
-        # ==========================================
-        # 1. TRUY XUẤT DỮ LIỆU THÁNG
-        # ==========================================
         month_data = self._month_index.get(year, month)
         
         print("\n" + "="*55)
@@ -58,10 +49,7 @@ class ReportManager:
         print(f" ⚖️ Thặng dư tích lũy: {net_savings:,.0f} đ " + ("📈" if net_savings >= 0 else "📉"))
         print("-" * 55)
 
-        # ==========================================
-        # 3. ĐỒ HỌA CHỮ: TỶ LỆ CHI TIÊU GIỮA CÁC NHÓM
-        # ==========================================
-        print(" 📊 BIỂU ĐỒ TỶ LỆ CHI TIÊU GIỮA CÁC DANH MỤC:")
+        print(" BIỂU ĐỒ TỶ LỆ CHI TIÊU GIỮA CÁC DANH MỤC:")
         if total_expense == 0:
             print("   (Chưa có dữ liệu chi tiêu để hiển thị biểu đồ)")
         else:
@@ -78,9 +66,6 @@ class ReportManager:
                 print(f"   • {state.category.name:<15} | {bar_visual:<20} | {percentage:6.1f}% ({state.total_expense:,.0f} đ)")
         print("-" * 55)
 
-        # ==========================================
-        # 4. TỔNG HỢP CÁC MỤC VƯỢT BUDGET (NGÂN SÁCH)
-        # ==========================================
         print(" ⚠️ DANH SÁCH DANH MỤC VƯỢT NGÂN SÁCH (BUDGET):")
         over_budget_count = 0
         
