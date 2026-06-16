@@ -1,10 +1,8 @@
 from CTDL import HashMap
 import model
 
-# ==================================
 # Category Index
 # category_id -> Category
-# ==================================
 
 class CategoryIndex:
 
@@ -65,10 +63,8 @@ class TransactionIndex:
 
     def __init__(self, month_data):
         self._transactions = month_data.transactions
-
-    # ==========================
+        
     # TÌM TUẦN TỰ
-    # ==========================
 
     def find_by_id(self, transaction_id):
         for i, transaction in enumerate(self._transactions):
