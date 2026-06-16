@@ -84,3 +84,65 @@ class CategoryFinance(HashMap.CategoryManager):
 
         print("Success")
         return
+    def update_category(
+            self,
+            category_id,
+            new_name=None,
+            new_type=None,
+            new_limit=None,
+            new_created_at=None
+    ):
+
+        # Find category
+        index = self.find_by_id(self.categories, category_id)
+
+        if index == -1:
+            raise ValueError("Category ID does not exist")
+
+        category = self.categories[index]
+
+        # Không cho sửa category đã bị xóa
+        if not category.is_active:
+            raise ValueError("Category has been removed")
+
+        # Update name
+        if new_name is not None:
+
+            name_index = self.find_by_name(self.categories, new_name)
+
+            if name_index != -1:
+                exist = self.categories[name_index]
+
+                if exist.id != category_id:
+                    raise ValueError("Category name already exists")
+
+            category.name = new_name
+
+        # Update type
+        if new_type is not None:
+
+            if new_type not in ["income", "expense"]:
+                raise ValueError("Invalid category type")
+
+            category.type = new_type
+
+        # Update limit
+        if new_limit is not None:
+
+            if new_limit < 0:
+                raise ValueError("Limit cannot be negative")
+
+            category.limit = new_limit
+
+        # Kiểm tra sau khi cập nhật type/limit
+        if category.type == "expense" and category.limit <= 0:
+            raise ValueError("Expense category must have limit > 0")
+
+        if category.type == "income" and category.limit != 0:
+            raise ValueError("Income category must have limit = 0")
+
+        # Update created_at
+        if new_created_at is not None:
+            category.created_at = new_created_at
+
+        print("Success")
