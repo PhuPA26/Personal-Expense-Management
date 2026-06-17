@@ -2,8 +2,46 @@ import CTDL
 import model
 import HashMap
 
-class CategoryFinance(HashMap.CategoryManager):
+class CategoryManager:
 
+    def __init__(self):
+        self.categories = []
+    
+    def add_category(self, category):
+        self.categories.append(category)
+
+    def find_by_id(self, categories, category_id):
+        for i, category in enumerate(categories):
+            if category.id == category_id:
+                return i
+        return -1
+
+    def find_by_name(self, categories, name):
+        for i, category in enumerate(categories):
+            if category.name.lower() == name.lower():
+                return i
+        return -1
+
+    def find_by_type(self, categories, category_type):
+        result = []
+        for i, category in enumerate(categories):
+            if category.type == category_type:
+                result.append(i)
+        return result
+    
+    def get(self, categories, category_id):
+        index = self.find_by_id(categories, category_id)
+        if index == -1:
+            return None
+        return categories[index]
+
+    def get_active_categories(self):
+        result = []
+        for category in self.categories:
+            result.append(category)
+        return result
+
+class CategoryFinance(CategoryManager):    
     def __init__(self):
         super().__init__()
 

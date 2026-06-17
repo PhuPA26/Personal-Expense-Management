@@ -77,9 +77,8 @@ def _save(finance_manager, category_finance):
 
 
 def _load():
-    fm = TransactionManager.FinanceManager()
     cf = CatMgr.CategoryFinance()
-    fm._category_manager = cf
+    fm = TransactionManager.FinanceManager(cf)
 
     try:
         f = open(_SAVE_FILE, "r", encoding="utf-8")
@@ -202,6 +201,7 @@ def _menu_category(finance_manager, category_finance):
         _print("  3. Xoa danh muc (soft delete)")
         _print("  4. Tim kiem danh muc")
         _print("  5. Xem tat ca danh muc")
+        _print("  6. Dat lai han muc cho thang cu the")
         _print("  0. Quay lai")
         _print(_LINE)
         choice = _input("  Chon: ").strip()
@@ -226,6 +226,10 @@ def _menu_category(finance_manager, category_finance):
         elif choice == "5":
             _log_action("Xem tat ca danh muc")
             _list_all_categories(category_finance)
+        elif choice == "6":
+            _log_action("Dat lai han muc cho thang cu the")
+            _set_monthly_budget(finance_manager)
+            _save(finance_manager, category_finance)
         else:
             _print("  Lua chon khong hop le.")
 
@@ -233,8 +237,8 @@ def _menu_category(finance_manager, category_finance):
 def _add_category(category_finance):
     _print()
     _print("  -- THEM DANH MUC --")
-    cat_id   = _input("  ID danh muc          : ").strip()
     name     = _input("  Ten danh muc         : ").strip()
+    cat_id   = name
     cat_type = _input("  Loai (income/expense): ").strip().lower()
     limit    = 0
     if cat_type == "expense":
@@ -349,6 +353,39 @@ def _list_all_categories(category_finance):
     for cat in cats:
         _print_category(cat)
 
+def _set_monthly_budget(finance_manager):
+    _print()
+    _print("  -- DAT LAI HAN MUC CHO THANG CU THE --")
+    raw_year  = _input("  Nam  : ").strip()
+    raw_month = _input("  Thang: ").strip()
+    try:
+        year  = int(raw_year)
+        month = int(raw_month)
+    except ValueError:
+        _print_result("  KET QUA: Nam/thang khong hop le.")
+        return
+        
+    _print("  -- Danh sach Danh muc chi tieu --")
+    active_cats = finance_manager._category_manager.get_active_categories()
+    has_expense = False
+    for c in active_cats:
+        if c.is_active and c.type == "expense":
+            _print(f"   - {c.name} (Han muc goc: {c.limit:,.0f} d)")
+            has_expense = True
+            
+    if not has_expense:
+        _print("  (Chua co danh muc chi tieu nao)")
+        return
+        
+    cat_id = _input("  Chon danh muc (Nhap Ten): ").strip()
+    raw_limit = _input("  Han muc moi (d): ").strip()
+    try:
+        new_limit = float(raw_limit)
+        finance_manager.set_monthly_budget(cat_id, year, month, new_limit)
+        _print_result(f"  KET QUA: Da cap nhat han muc {new_limit:,.0f} d cho '{cat_id}' trong {month:02d}/{year}.")
+    except ValueError as e:
+        _print_result(f"  KET QUA: Loi - {e}")
+
 # GIAO DICH (TRANSACTION)
 def _menu_transaction(finance_manager):
     while True:
@@ -392,7 +429,10 @@ def _menu_transaction(finance_manager):
 def _add_transaction(finance_manager):
     _print()
     _print("  -- THEM GIAO DICH --")
-    tx_id  = _input("  ID giao dich     : ").strip()
+    
+    # Tự động sinh mã giao dịch
+    tx_id  = "TX" + datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    
     raw    = _input("  So tien (d)      : ").strip()
     try:
         amount = float(raw)
@@ -400,12 +440,35 @@ def _add_transaction(finance_manager):
         _print_result("  KET QUA: So tien khong hop le.")
         return
     date   = _input("  Ngay (dd-mm-yyyy): ").strip()
-    cat_id = _input("  ID danh muc      : ").strip()
     note   = _input("  Ghi chu          : ").strip()
+    
+    suggested_cat = finance_manager.suggest_category_by_note(note)
+    cat_id = None
+    
+    if suggested_cat:
+        ans = _input(f"  ? Gợi ý: Ghi chú này có vẻ thuộc danh mục '{suggested_cat}'.\n  Bạn có muốn chọn mục '{suggested_cat}' không? (Enter/y để đồng ý, n để chọn mục khác): ").strip().lower()
+        if ans == '' or ans == 'y':
+            cat_id = suggested_cat
+            
+    if not cat_id:
+        _print("  -- Danh sach Danh muc hien co --")
+        active_cats = finance_manager._category_manager.get_active_categories()
+        has_active = False
+        for c in active_cats:
+            if c.is_active:
+                _print(f"   - {c.name} ({c.type})")
+                has_active = True
+                
+        if not has_active:
+            _print("  (Chua co danh muc nao, vui long tao danh muc truoc)")
+            
+        cat_id = _input("  Chon danh muc (Nhap Ten): ").strip()
 
     try:
-        finance_manager.add_transaction(tx_id, amount, date, cat_id, note)
+        is_exceeded = finance_manager.add_transaction(tx_id, amount, date, cat_id, note)
         _print_result(f"  KET QUA: Them giao dich thanh cong. (ID={tx_id}, So tien={amount:,.0f}d, Ngay={date})")
+        if is_exceeded:
+            _print_result("  ⚠️ CẢNH BÁO: Giao dịch này làm vượt ngân sách tháng!")
     except ValueError as e:
         _print_result(f"  KET QUA: Loi - {e}")
 
@@ -464,8 +527,10 @@ def _update_transaction(finance_manager):
         new_note = _input("  Ghi chu moi: ").strip()
 
     try:
-        finance_manager.update_transaction(tx_id, new_amount, new_date, new_cat_id, new_note)
+        is_exceeded = finance_manager.update_transaction(tx_id, new_amount, new_date, new_cat_id, new_note)
         _print_result(f"  KET QUA: Cap nhat giao dich {tx_id} thanh cong.")
+        if is_exceeded:
+            _print_result("  ⚠️ CẢNH BÁO: Giao dịch này làm vượt ngân sách tháng!")
     except ValueError as e:
         _print_result(f"  KET QUA: Loi - {e}")
 
@@ -567,20 +632,23 @@ def _view_monthly_transactions(finance_manager):
 # BAO CAO
 def _menu_report(finance_manager):
     _print()
-    _print("  -- BAO CAO TAI CHINH --")
+    _print("  -- BÁO CÁO TÀI CHÍNH --")
+    _print("  1. Báo cáo Ngày")
+    _print("  2. Báo cáo Tháng")
+    _print("  3. Báo cáo Năm")
+    choice = _input("  Chon: ").strip()
+    
+    if choice not in ["1", "2", "3"]:
+        _print("  Lựa chọn không hợp lệ.")
+        return
+        
     raw_year  = _input("  Nam  : ").strip()
-    raw_month = _input("  Thang: ").strip()
     try:
         year  = int(raw_year)
-        month = int(raw_month)
     except ValueError:
-        _print_result("  KET QUA: Nam/thang khong hop le.")
+        _print_result("  KET QUA: Nam khong hop le.")
         return
 
-    _log(f"\n[KET QUA] Bao cao thang {month:02d}/{year}")
-    _log("-" * 40)
-
-    # Capture output của Report bằng cách override print tạm thời
     import builtins
     original_print = builtins.print
     report_lines   = []
@@ -591,7 +659,30 @@ def _menu_report(finance_manager):
         report_lines.append(text)
 
     builtins.print = _capture_print
-    Report.ReportManager(finance_manager._month_index).generate_monthly_report(year, month)
+        
+    if choice == "1":
+        raw_month = _input("  Thang: ").strip()
+        raw_day = _input("  Ngày : ").strip()
+        try:
+            month = int(raw_month)
+            day = int(raw_day)
+            Report.ReportManager(finance_manager._month_index).generate_daily_report(year, month, day)
+        except ValueError:
+            builtins.print = original_print
+            _print_result("  KET QUA: Thang/ngay khong hop le.")
+            return
+    elif choice == "2":
+        raw_month = _input("  Thang: ").strip()
+        try:
+            month = int(raw_month)
+            Report.ReportManager(finance_manager._month_index).generate_monthly_report(year, month)
+        except ValueError:
+            builtins.print = original_print
+            _print_result("  KET QUA: Thang khong hop le.")
+            return
+    elif choice == "3":
+        Report.ReportManager(finance_manager._month_index).generate_yearly_report(year)
+        
     builtins.print = original_print
 
     for line in report_lines:
@@ -606,9 +697,12 @@ def main():
     _print(_SEP)
 
     while True:
+        total_balance = finance_manager.get_total_balance()
+        
         _print()
         _print(_SEP)
         _print("  MENU CHINH")
+        _print(f"  >> SỐ DƯ TÀI KHOẢN HIỆN TẠI: {total_balance:,.0f} đ <<")
         _print(_SEP)
         _print("  1. Quan ly Danh muc")
         _print("  2. Quan ly Giao dich")

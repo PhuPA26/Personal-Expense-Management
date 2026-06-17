@@ -71,6 +71,12 @@ class TransactionIndex:
                 return i
         return -1
 
+    def get_transaction(self, transaction_id):
+        index = self.find_by_id(transaction_id)
+        if index == -1:
+            return None
+        return self._transactions[index]
+
     def find_by_category(self, category_id):
         result = []
         for i, transaction in enumerate(self._transactions):
@@ -177,52 +183,7 @@ class TransactionIndex:
             result.append(transaction)
         return result
     
-class CategoryManager:
 
-    def __init__(self):
-        self.categories = []
-    
-    def add_category(self, category):
-        self.categories.append(category)
-#TÌM THEO ID    
-    def find_by_id(self, categories, category_id):
-        for i, category in enumerate(categories):
-            if category.id == category_id:
-                return i
-        return -1
-
-#TÌM THEO TÊN
-    def find_by_name(self, categories, name):
-
-        for i, category in enumerate(categories):
-            if category.name.lower() == name.lower():
-                return i
-
-        return -1
-
-#TÌM THEO LOẠI
-
-    def find_by_type(self, categories, category_type):
-        result = []
-
-        for i, category in enumerate(categories):
-            if category.type == category_type:
-                result.append(i)
-
-        return result
-    
-    def get(self, categories, category_id):
-        index = self.find_by_id(categories, category_id)
-        if index == -1:
-            return None
-
-        return categories[index]
-
-    def get_active_categories(self):
-            result = []
-            for category in self.categories:
-                result.append(category)
-            return result
 
 class TransactionMap:
 

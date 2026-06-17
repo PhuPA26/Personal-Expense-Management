@@ -1,14 +1,85 @@
 import HashMap
 import model
-import CTDL
 import datetime
 
 
 class FinanceManager:
-    def __init__(self):
+    def __init__(self, category_manager):
         self._month_index = HashMap.MonthIndex()
         self._transaction_map = HashMap.TransactionMap()
-        self._category_manager = HashMap.CategoryManager()
+        self._category_manager = category_manager
+
+    def _get_or_create_category_state(self, category_index, category, year, month):
+        state = category_index.get(category.id)
+        if state is None:
+            if category.type.lower() == "income":
+                state = model.IncomeState(category, year, month)
+            else:
+                state = model.ExpenseState(category, year, month, category.limit)
+            category_index.add(state)
+        return state
+
+    def _is_state_empty(self, state):
+        if isinstance(state, model.ExpenseState):
+            return state.total_expense == 0
+        elif isinstance(state, model.IncomeState):
+            return state.total_income == 0
+        return False
+
+    def get_total_balance(self):
+        total_income = 0
+        total_expense = 0
+        
+        for month_data in self._month_index._months.values():
+            for state_id in month_data.category_states.keys():
+                state = month_data.category_states.get(state_id)
+                if isinstance(state, model.IncomeState):
+                    total_income += state.total_income
+                elif isinstance(state, model.ExpenseState):
+                    total_expense += state.total_expense
+                    
+        return total_income - total_expense
+
+    def set_monthly_budget(self, category_id, year, month, new_limit):
+        if new_limit < 0:
+            raise ValueError("Limit cannot be negative.")
+            
+        category = self._check_category(category_id)
+        if category.type.lower() != "expense":
+            raise ValueError("Can only set budget for expense categories.")
+            
+        month_data = self._month_index.get_or_create(year, month)
+        category_index = HashMap.CategoryIndex(month_data)
+        
+        category_state = self._get_or_create_category_state(category_index, category, year, month)
+        if isinstance(category_state, model.ExpenseState):
+            category_state.set_limit(new_limit)
+
+    def suggest_category_by_note(self, note):
+        if not note or not note.strip():
+            return None
+            
+        note_lower = note.strip().lower()
+        keys = self._month_index._months.keys()
+        
+        parsed_keys = []
+        for k in keys:
+            if k:
+                parts = k.split("-")
+                if len(parts) == 2:
+                    parsed_keys.append((int(parts[0]), int(parts[1]), k))
+                    
+        parsed_keys.sort(reverse=True)
+        
+        for y, m, k in parsed_keys:
+            month_data = self._month_index._months.get(k)
+            if month_data and hasattr(month_data, 'transactions'):
+                for tx in reversed(month_data.transactions):
+                    if tx.note:
+                        tx_note_lower = tx.note.strip().lower()
+                        if tx_note_lower and (note_lower in tx_note_lower or tx_note_lower in note_lower):
+                            return tx.category_id
+        return None
 
     def _check_transaction_id(self, transaction_id):
 
@@ -20,17 +91,17 @@ class FinanceManager:
         if amount <= 0:
             raise ValueError("Amount must be greater than 0.")
 
-    def _check_date(self, date):
+    def _parse_and_validate_date(self, date_str):
 
         try:
-            check_date = datetime.datetime.strptime(date, "%d-%m-%Y").date()
+            parsed_date = datetime.datetime.strptime(date_str, "%d-%m-%Y").date()
         except ValueError:
             raise ValueError("Date must be in format dd-mm-yyyy and be valid.")
 
-        if check_date > datetime.date.today():
+        if parsed_date > datetime.date.today():
             raise ValueError("Date cannot be in the future.")
 
-        return check_date
+        return parsed_date
     
     def _check_category(self, category_id):
 
@@ -42,7 +113,11 @@ class FinanceManager:
         if index == -1:
             raise ValueError("Category does not exist.")
 
-        return self._category_manager.categories[index]
+        category = self._category_manager.categories[index]
+        if not category.is_active:
+            raise ValueError("Category is inactive.")
+
+        return category
     
     def add_transaction(
             self,
@@ -56,11 +131,11 @@ class FinanceManager:
         self._check_transaction_id(transaction_id)
 
         self._check_amount(amount)
-        check_date = self._check_date(date)
+        parsed_date = self._parse_and_validate_date(date)
         category = self._check_category(category_id)
 
-        year = check_date.year
-        month = check_date.month
+        year = parsed_date.year
+        month = parsed_date.month
 
         # Lấy dữ liệu tháng
         month_data = self._month_index.get_or_create(year, month)
@@ -72,7 +147,7 @@ class FinanceManager:
         transaction = model.Transaction(
             transaction_id,
             amount,
-            check_date,
+            parsed_date,
             category_id,
             category.type,
             note
@@ -89,44 +164,22 @@ class FinanceManager:
         )
 
         # Lấy hoặc tạo CategoryState
-        category_state = category_index.get(category.id)
-
-        if category_state is None:
-
-            if category.type.upper() == "INCOME":
-
-                category_state = model.IncomeState(
-                    category,
-                    year,
-                    month
-                )
-
-            else:
-
-                category_state = model.ExpenseState(
-                    category,
-                    year,
-                    month,
-                    category.limit
-                )
-
-            category_index.add(category_state)
+        category_state = self._get_or_create_category_state(category_index, category, year, month)
 
         # Cập nhật thống kê
-
         category_state.update_transaction(
             new_amount=amount,
             mode="add"
         )
 
-        # Kiểm tra Budget
+        is_budget_exceeded = False
         if (
             isinstance(category_state, model.ExpenseState)
             and category_state.total_expense > category_state.limit
         ):
-            print("Warning: Budget exceeded!")
+            is_budget_exceeded = True
 
-        print("Transaction added successfully.")
+        return is_budget_exceeded
 
     def delete_transaction(self, transaction_id):
 
@@ -146,9 +199,9 @@ class FinanceManager:
 
 
         # Tìm Transaction
-        index = transaction_index.find_by_id(transaction_id)
-
-        transaction = transaction_index._transactions[index]
+        transaction = transaction_index.get_transaction(transaction_id)
+        if transaction is None:
+            raise ValueError("Transaction not found in index.")
 
         # Cập nhật CategoryState
         category_state = category_index.get(transaction.category_id)
@@ -157,6 +210,9 @@ class FinanceManager:
             old_amount=transaction.amount,
             mode="delete"
         )
+
+        if self._is_state_empty(category_state):
+            category_index.remove(transaction.category_id)
 
         # Xóa Transaction
         transaction_index.remove(transaction_id)
@@ -190,16 +246,13 @@ class FinanceManager:
         old_transaction_index = HashMap.TransactionIndex(old_month_data)
         old_category_index = HashMap.CategoryIndex(old_month_data)
 
-        index = old_transaction_index.find_by_id(transaction_id)
-
-        if index == -1:
-            raise ValueError("Transaction does not exist.")
-
-        transaction = old_transaction_index._transactions[index]
+        transaction = old_transaction_index.get_transaction(transaction_id)
+        if transaction is None:
+            raise ValueError("Transaction does not exist in index.")
 
         old_amount = transaction.amount
         old_date = transaction.date
-        old_category_id = transaction.category.id
+        old_category_id = transaction.category_id
 
         old_category_state = old_category_index.get(old_category_id)
 
@@ -208,23 +261,24 @@ class FinanceManager:
             self._check_amount(amount)
 
         if date is not None:
-            check_date = self._check_date(date)
+            parsed_date = self._parse_and_validate_date(date)
         else:
-            check_date = old_date
+            parsed_date = old_date
 
         if category_id is not None:
             new_category = self._check_category(category_id)
         else:
-            new_category = transaction.category
+            new_category = self._check_category(transaction.category_id)
 
-        new_year = check_date.year
-        new_month = check_date.month
+        new_year = parsed_date.year
+        new_month = parsed_date.month
 
         # RESET DEFAULT VALUES
         new_amount = amount if amount is not None else old_amount
         new_note = note if note is not None else transaction.note
 
         # TRƯỜNG HỢP ĐỔI THÁNG
+        is_budget_exceeded = False
         if old_year != new_year or old_month != new_month:
 
             # remove old stats
@@ -232,6 +286,9 @@ class FinanceManager:
                 old_amount=old_amount,
                 mode="delete"
             )
+
+            if self._is_state_empty(old_category_state):
+                old_category_index.remove(old_category_id)
 
             old_transaction_index.remove(transaction_id)
 
@@ -242,8 +299,9 @@ class FinanceManager:
 
             # update transaction
             transaction.amount = new_amount
-            transaction.date = check_date
-            transaction.category = new_category
+            transaction.date = parsed_date
+            transaction.category_id = new_category.id
+            transaction.transaction_type = new_category.type
             transaction.note = new_note
 
             new_transaction_index.add(transaction)
@@ -251,19 +309,9 @@ class FinanceManager:
             self._transaction_map.add(transaction_id, new_year, new_month)
 
             # category state new month
-            new_category_state = new_category_index.get(new_category.id)
-
-            if new_category_state is None:
-                if new_category.type.upper() == "INCOME":
-                    new_category_state = model.IncomeState(
-                        new_category, new_year, new_month
-                    )
-                else:
-                    new_category_state = model.ExpenseState(
-                        new_category, new_year, new_month, new_category.limit
-                    )
-
-                new_category_index.add(new_category_state)
+            new_category_state = self._get_or_create_category_state(
+                new_category_index, new_category, new_year, new_month
+            )
 
             new_category_state.update_transaction(
                 new_amount=new_amount,
@@ -272,7 +320,7 @@ class FinanceManager:
 
             if isinstance(new_category_state, model.ExpenseState):
                 if new_category_state.total_expense > new_category_state.limit:
-                    print("Warning: Budget exceeded!")
+                    is_budget_exceeded = True
 
 
         # KHÔNG ĐỔI THÁNG
@@ -286,20 +334,12 @@ class FinanceManager:
                     mode="delete"
                 )
 
-                new_category_state = old_category_index.get(new_category.id)
+                if self._is_state_empty(old_category_state):
+                    old_category_index.remove(old_category_id)
 
-                if new_category_state is None:
-
-                    if new_category.type.upper() == "INCOME":
-                        new_category_state = model.IncomeState(
-                            new_category, old_year, old_month
-                        )
-                    else:
-                        new_category_state = model.ExpenseState(
-                            new_category, old_year, old_month, new_category.limit
-                        )
-
-                    old_category_index.add(new_category_state)
+                new_category_state = self._get_or_create_category_state(
+                    old_category_index, new_category, old_year, old_month
+                )
 
                 new_category_state.update_transaction(
                     new_amount=new_amount,
@@ -308,7 +348,7 @@ class FinanceManager:
 
                 if isinstance(new_category_state, model.ExpenseState):
                     if new_category_state.total_expense > new_category_state.limit:
-                        print("Warning: Budget exceeded!")
+                        is_budget_exceeded = True
 
             else:
 
@@ -320,15 +360,16 @@ class FinanceManager:
 
                 if isinstance(old_category_state, model.ExpenseState):
                     if old_category_state.total_expense > old_category_state.limit:
-                        print("Warning: Budget exceeded!")
+                        is_budget_exceeded = True
 
             # relocate nếu đổi ngày
-            if old_date != check_date:
-                old_transaction_index.relocate(transaction_id, check_date)
+            if old_date != parsed_date:
+                old_transaction_index.relocate(transaction_id, parsed_date)
 
             # update transaction fields
             transaction.amount = new_amount
-            transaction.category = new_category
+            transaction.category_id = new_category.id
+            transaction.transaction_type = new_category.type
             transaction.note = new_note
 
-        print("Transaction updated successfully.")
+        return is_budget_exceeded

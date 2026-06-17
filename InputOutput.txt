@@ -11,3 +11,90 @@ INPUT  >>   Chon: 5
   ID: SALARY01     | Ten: Luong           | Loai: income   | Han muc: ---             | Hoat dong
 INPUT  >>   Chon: 0
 INPUT  >>   Chon: 0
+INPUT  >>   Chon: 1
+
+[HANH DONG] Menu: Quan ly Danh muc
+----------------------------------------
+INPUT  >>   Chon: 1
+
+[HANH DONG] Them danh muc
+----------------------------------------
+INPUT  >>   ID danh muc          : 
+INPUT  >>   Ten danh muc         : 
+INPUT  >>   Loai (income/expense): 
+  KET QUA: Loi - Invalid category type
+INPUT  >>   Chon: 0
+INPUT  >>   Chon: 0
+INPUT  >>   Chon: 3
+
+[HANH DONG] Menu: Bao cao thang
+----------------------------------------
+INPUT  >>   Nam  : 2026
+INPUT  >>   Thang: 3
+
+[KET QUA] Bao cao thang 03/2026
+----------------------------------------
+
+=======================================================
+        BÁO CÁO TÀI CHÍNH THÁNG 03/2026        
+=======================================================
+ ❌ Không tìm thấy dữ liệu giao dịch nào cho tháng 03/2026.
+=======================================================
+INPUT  >>   Chon: 0
+INPUT  >>   Chon: 2
+
+[HANH DONG] Menu: Quan ly Giao dich
+----------------------------------------
+INPUT  >>   Chon: 1
+
+[HANH DONG] Them giao dich
+----------------------------------------
+INPUT  >>   ID giao dich     : 23
+INPUT  >>   So tien (d)      : 321
+INPUT  >>   Ngay (dd-mm-yyyy): 12-12-2026
+INPUT  >>   ID danh muc      : 1
+INPUT  >>   Ghi chu          : No
+  KET QUA: Loi - Date cannot be in the future.
+INPUT  >>   Chon: 5
+
+[HANH DONG] Xem giao dich theo thang
+----------------------------------------
+INPUT  >>   Nam  : 2026
+INPUT  >>   Thang: 12
+  KET QUA: Khong co du lieu cho thang 12/2026.
+INPUT  >>   Chon: 2
+
+[HANH DONG] Menu: Quan ly Giao dich
+----------------------------------------
+INPUT  >>   Chon: 1
+
+[HANH DONG] Them giao dich
+----------------------------------------
+INPUT  >>   So tien (d)      : 100000
+INPUT  >>   Ngay (dd-mm-yyyy): 17-6-2026
+INPUT  >>   Chon danh muc (Nhap Ten): Phuong tien di lai
+INPUT  >>   Ghi chu          : No
+  KET QUA: Loi - Category does not exist.
+INPUT  >>   Chon: 5
+
+[HANH DONG] Xem giao dich theo thang
+----------------------------------------
+INPUT  >>   Nam  : 2026
+INPUT  >>   Thang: 6
+  KET QUA: Khong co du lieu cho thang 06/2026.
+INPUT  >>   Chon: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/main.py"
+INPUT  >>   Chon: 2
+
+[HANH DONG] Sua giao dich
+----------------------------------------
+INPUT  >>   ID giao dich can sua: 2
+  KET QUA: Loi - Transaction does not exist.
+INPUT  >>   Chon: 5
+
+[HANH DONG] Xem giao dich theo thang
+----------------------------------------
+INPUT  >>   Nam  : 2026
+INPUT  >>   Thang: 5
+  KET QUA: Khong co du lieu cho thang 05/2026.
+INPUT  >>   Chon: 0
+INPUT  >>   Chon: 0

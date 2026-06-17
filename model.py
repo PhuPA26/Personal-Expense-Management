@@ -70,6 +70,9 @@ class ExpenseState(CategoryState):
         elif mode == "delete":
             self.total_expense -= old_amount
 
+    def set_limit(self, new_limit):
+        self.limit = new_limit
+
 class MonthData:
     def __init__(self):
         self.category_states = HashMap()

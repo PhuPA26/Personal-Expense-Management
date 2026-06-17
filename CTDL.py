@@ -12,30 +12,30 @@ class HashNode:
 
 class HashMap:
 
-    # ---------- Public ----------
-
     def __init__(self):
-        self.__TABLE_SIZE = 128
+        self.__TABLE_SIZE = 1024
         self.__buckets = [None] * self.__TABLE_SIZE
+        self.__count = 0
 
-    def insert(self, key, value):
-
+    def _pure_insert(self, key, value):
         index = self.__hash_function(key)
-
         current = self.__buckets[index]
 
         while current is not None:
-
             if current.key == key:
                 current.value = value
                 return
-
             current = current.next
 
         new_node = HashNode(key, value)
-
         new_node.next = self.__buckets[index]
         self.__buckets[index] = new_node
+        self.__count += 1
+
+    def insert(self, key, value):
+        self._pure_insert(key, value)
+        if self.__count / self.__TABLE_SIZE > 0.75:
+            self.__rehash()
 
     def get(self, key):
 
@@ -71,6 +71,7 @@ class HashMap:
                 else:
                     previous.next = current.next
 
+                self.__count -= 1
                 return
 
             previous = current
@@ -80,6 +81,7 @@ class HashMap:
 
         for i in range(self.__TABLE_SIZE):
             self.__buckets[i] = None
+        self.__count = 0
 
     def keys(self):
 
@@ -144,3 +146,15 @@ class HashMap:
             ) % self.__TABLE_SIZE
 
         return hash_value
+
+    def __rehash(self):
+        old_buckets = self.__buckets
+        self.__TABLE_SIZE *= 2
+        self.__buckets = [None] * self.__TABLE_SIZE
+        self.__count = 0
+
+        for bucket in old_buckets:
+            current = bucket
+            while current is not None:
+                self._pure_insert(current.key, current.value)
+                current = current.next
