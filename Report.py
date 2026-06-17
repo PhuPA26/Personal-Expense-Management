@@ -9,15 +9,7 @@ class ReportManager:
         self._month_index = month_index
 
     def generate_monthly_report(self, year, month):
-        """
-        In báo cáo tài chính tháng ra Terminal:
-        - Tổng hợp Thu, Chi, Thặng dư trong kỳ.
-        - Vẽ biểu đồ tỷ lệ phần trăm chi tiêu giữa các nhóm bằng ký tự văn bản.
-        - Liệt kê danh sách các mục chi tiêu vượt hạn mức (Budget).
-        """
-        # ==========================================
         # 1. TRUY XUẤT DỮ LIỆU THÁNG
-        # ==========================================
         month_data = self._month_index.get(year, month)
         
         print("\n" + "="*55)
@@ -28,10 +20,8 @@ class ReportManager:
             print(f" ❌ Không tìm thấy dữ liệu giao dịch nào cho tháng {month:02d}/{year}.")
             print("="*55)
             return
-
-        # ==========================================
+        
         # 2. TỔNG HỢP SỐ LIỆU THU / CHI
-        # ==========================================
         total_income = 0
         total_expense = 0
         expense_list = []
@@ -58,16 +48,11 @@ class ReportManager:
         print(f" ⚖️ Thặng dư tích lũy: {net_savings:,.0f} đ " + ("📈" if net_savings >= 0 else "📉"))
         print("-" * 55)
 
-        # ==========================================
         # 3. ĐỒ HỌA CHỮ: TỶ LỆ CHI TIÊU GIỮA CÁC NHÓM
-        # ==========================================
         print(" 📊 BIỂU ĐỒ TỶ LỆ CHI TIÊU GIỮA CÁC DANH MỤC:")
         if total_expense == 0:
             print("   (Chưa có dữ liệu chi tiêu để hiển thị biểu đồ)")
         else:
-            # Sắp xếp danh mục có số tiền tiêu từ nhiều nhất đến ít nhất
-            expense_list.sort(key=lambda x: x.total_expense, reverse=True)
-            
             for state in expense_list:
                 percentage = (state.total_expense / total_expense) * 100
                 
@@ -78,10 +63,9 @@ class ReportManager:
                 print(f"   • {state.category.name:<15} | {bar_visual:<20} | {percentage:6.1f}% ({state.total_expense:,.0f} đ)")
         print("-" * 55)
 
-        # ==========================================
+
         # 4. TỔNG HỢP CÁC MỤC VƯỢT BUDGET (NGÂN SÁCH)
-        # ==========================================
-        print(" ⚠️ DANH SÁCH DANH MỤC VƯỢT NGÂN SÁCH (BUDGET):")
+        print("DANH SÁCH DANH MỤC VƯỢT NGÂN SÁCH (BUDGET):")
         over_budget_count = 0
         
         for state in expense_list:
@@ -100,6 +84,6 @@ class ReportManager:
                 print()
                 
         if over_budget_count == 0:
-            print("   🎉 Tuyệt vời! Bạn đã kiểm soát tốt, không có danh mục nào chi tiêu vượt hạn mức.")
+            print("Tuyệt vời! không có danh mục nào chi tiêu vượt hạn mức.")
             
         print("="*55 + "\n")

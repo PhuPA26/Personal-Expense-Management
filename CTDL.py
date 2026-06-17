@@ -81,6 +81,42 @@ class HashMap:
         for i in range(self.__TABLE_SIZE):
             self.__buckets[i] = None
 
+    def keys(self):
+
+        result = []
+
+        for bucket in self.__buckets:
+            node = bucket
+            while node is not None:
+                result.append(node.key)
+                node = node.next
+
+        return result
+
+    def values(self):
+
+        result = []
+
+        for bucket in self.__buckets:
+            node = bucket
+            while node is not None:
+                result.append(node.value)
+                node = node.next
+
+        return result
+
+    def items(self):
+
+        result = []
+
+        for bucket in self.__buckets:
+            node = bucket
+            while node is not None:
+                result.append((node.key, node.value))
+                node = node.next
+
+        return result
+
     def __setitem__(self, key, value):
         self.insert(key, value)
 

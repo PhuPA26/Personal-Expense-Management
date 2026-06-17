@@ -1,0 +1,13 @@
+INPUT  >>   Chon: 1
+
+[HANH DONG] Menu: Quan ly Danh muc
+----------------------------------------
+INPUT  >>   Chon: 5
+
+[HANH DONG] Xem tat ca danh muc
+----------------------------------------
+  KET QUA: Danh sach 2 danh muc:
+  ID: EAT02        | Ten: Phuong tien di lai | Loai: expense  | Han muc: 100,000 d       | Hoat dong
+  ID: SALARY01     | Ten: Luong           | Loai: income   | Han muc: ---             | Hoat dong
+INPUT  >>   Chon: 0
+INPUT  >>   Chon: 0
