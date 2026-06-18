@@ -1,4 +1,4 @@
-﻿from core.data_structure import HashMap
+from core.data_structure import HashMap
 class Transaction:
     def __init__(
         self,
@@ -43,6 +43,7 @@ class IncomeState(CategoryState):
     def __init__(self, category, year, month):
         super().__init__(category, year, month)
         self.total_income = 0
+        
     def update_transaction(self, old_amount=0, new_amount=0, mode="add"):
         if mode == "add":
             self.total_income += new_amount
@@ -57,7 +58,7 @@ class IncomeState(CategoryState):
 class ExpenseState(CategoryState):
     def __init__(self, category, year, month, limit):
         super().__init__(category, year, month)
-        self.limit = category.limit
+        self.limit = limit
         self.total_expense = 0
         
     def update_transaction(self, old_amount=0, new_amount=0, mode="add"):

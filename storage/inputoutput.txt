@@ -1,39 +1,24 @@
-INPUT  >>   Chon: 0
-INPUT  >>   Chon: 0
-INPUT  >>   Chon: 1
+INPUT  >>   Chọn: 1
 
-[HANH DONG] Menu: Quan ly Danh muc
+[HANH DONG] Menu: Quản lý Danh mục
 ----------------------------------------
-INPUT  >>   Chon: 5
+INPUT  >>   Chọn: 5
 
-[HANH DONG] Xem tat ca danh muc
+[HANH DONG] Xem tất cả danh mục
 ----------------------------------------
-  KET QUA: Chua co danh muc nao.
-INPUT  >>   Chon: 1
-
-[HANH DONG] Menu: Quan ly Danh muc
-----------------------------------------
-INPUT  >>   Chon: 5
-
-[HANH DONG] Xem tat ca danh muc
-----------------------------------------
-  KET QUA: Danh sach 11 danh muc:
-  ID: ăn uống      | Ten: Ăn uống         | Loai: expense  | Han muc: 3,000,000 d     | Hoat dong
-  ID: đi lại       | Ten: Đi lại          | Loai: expense  | Han muc: 500,000 d       | Hoat dong
-  ID: học tập      | Ten: Học tập         | Loai: expense  | Han muc: 2,000,000 d     | Hoat dong
-  ID: sinh hoạt    | Ten: Sinh hoạt       | Loai: expense  | Han muc: 1,000,000 d     | Hoat dong
-  ID: giải trí     | Ten: Giải trí        | Loai: expense  | Han muc: 800,000 d       | Hoat dong
-  ID: lương        | Ten: Lương           | Loai: income   | Han muc: ---             | Hoat dong
-  ID: thưởng       | Ten: Thưởng          | Loai: income   | Han muc: ---             | Hoat dong
-  ID: cho vay      | Ten: Cho vay         | Loai: expense  | Han muc: 99,999,999 d    | Hoat dong
-  ID: thu nợ       | Ten: Thu nợ          | Loai: income   | Han muc: ---             | Hoat dong
-  ID: đi vay       | Ten: Đi vay          | Loai: income   | Han muc: ---             | Hoat dong
-  ID: trả nợ       | Ten: Trả nợ          | Loai: expense  | Han muc: 99,999,999 d    | Hoat dong
-INPUT  >>   Chon: 2
-
-[HANH DONG] Menu: Quan ly Giao dich
-----------------------------------------
-INPUT  >>   Chon: 0
+  KẾT QUẢ: Danh sach 11 danh mục:
+  ID: ăn uống      | Tên: Ăn uống         | Loại: expense  | Hạn mức: 3,000,000 d     | Hoạt động
+  ID: đi lại       | Tên: Đi lại          | Loại: expense  | Hạn mức: 500,000 d       | Hoạt động
+  ID: học tập      | Tên: Học tập         | Loại: expense  | Hạn mức: 2,000,000 d     | Hoạt động
+  ID: sinh hoạt    | Tên: Sinh hoạt       | Loại: expense  | Hạn mức: 1,000,000 d     | Hoạt động
+  ID: giải trí     | Tên: Giải trí        | Loại: expense  | Hạn mức: 800,000 d       | Hoạt động
+  ID: lương        | Tên: Lương           | Loại: income   | Hạn mức: ---             | Hoạt động
+  ID: thưởng       | Tên: Thưởng          | Loại: income   | Hạn mức: ---             | Hoạt động
+  ID: cho vay      | Tên: Cho vay         | Loại: expense  | Hạn mức: 99,999,999 d    | Hoạt động
+  ID: thu nợ       | Tên: Thu nợ          | Loại: income   | Hạn mức: ---             | Hoạt động
+  ID: đi vay       | Tên: Đi vay          | Loại: income   | Hạn mức: ---             | Hoạt động
+  ID: trả nợ       | Tên: Trả nợ          | Loại: expense  | Hạn mức: 99,999,999 d    | Hoạt động
+INPUT  >>   Chọn: 0
 INPUT  >>   Chọn: 0
 INPUT  >>   Chọn: 1
 
@@ -55,61 +40,7 @@ INPUT  >>   Chọn: 5
   ID: thu nợ       | Tên: Thu nợ          | Loại: income   | Hạn mức: ---             | Hoạt động
   ID: đi vay       | Tên: Đi vay          | Loại: income   | Hạn mức: ---             | Hoạt động
   ID: trả nợ       | Tên: Trả nợ          | Loại: expense  | Hạn mức: 99,999,999 d    | Hoạt động
-INPUT  >>   Chọn: 2
-
-[HANH DONG] Menu: Quản lý Giao dịch
-----------------------------------------
-INPUT  >>   Chọn: 6
-
-[HANH DONG] Import giao dịch từ file (CSV)
-----------------------------------------
-INPUT  >>   Nhập đường dẫn file CSV (VD: import.csv): import.csv
-  KẾT QUẢ: Đã import thành công 95 giao dịch.
-INPUT  >>   Chọn: 3
-
-[HANH DONG] Menu: Báo cáo tháng
-----------------------------------------
-INPUT  >>   Chọn: 4
-INPUT  >>   Nhập số tháng K (Mặc định 3): 6
-
-=======================================================
-  -- TỔNG QUAN CHI TIÊU 6 THÁNG GẦN NHẤT --
-=======================================================
- * Tháng 06/2026: Tổng thu 7,500,000 đ, Tổng chi 5,080,000 đ, Thặng dư 2,420,000 đ
- * Tháng 05/2026: Tổng thu 7,000,000 đ, Tổng chi 7,265,000 đ, Thặng dư -265,000 đ ⚠️
- * Tháng 04/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
- * Tháng 03/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
- * Tháng 02/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
- * Tháng 01/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
--------------------------------------------------------
- => TRUNG BÌNH CHI TIÊU TOÀN GIAI ĐOẠN: 2,057,500 đ / tháng.
-=======================================================
-
-INPUT  >>   Chọn: 2
-
-[HANH DONG] Menu: Quản lý Giao dịch
-----------------------------------------
 INPUT  >>   Chọn: 0
-INPUT  >>   Chọn: 3
-
-[HANH DONG] Menu: Báo cáo tháng
-----------------------------------------
-INPUT  >>   Chọn: 4
-INPUT  >>   Nhập số tháng K (Mặc định 3): 6
-
-=======================================================
-  -- TỔNG QUAN CHI TIÊU 6 THÁNG GẦN NHẤT --
-=======================================================
- * Tháng 06/2026: Tổng thu 7,500,000 đ, Tổng chi 5,080,000 đ, Thặng dư 2,420,000 đ
- * Tháng 05/2026: Tổng thu 7,000,000 đ, Tổng chi 7,265,000 đ, Thặng dư -265,000 đ ⚠️
- * Tháng 04/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
- * Tháng 03/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
- * Tháng 02/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
- * Tháng 01/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
--------------------------------------------------------
- => TRUNG BÌNH CHI TIÊU TOÀN GIAI ĐOẠN: 2,057,500 đ / tháng.
-=======================================================
-
 INPUT  >>   Chọn: 3
 
 [HANH DONG] Menu: Báo cáo tháng
@@ -211,4 +142,49 @@ INPUT  >>   Nhập số tháng K (Mặc định 3): 6
   02-05-2026 | -20,000 đ       | Đi lại          | Gửi xe tháng ở trường
   01-05-2026 | +5,000,000 đ    | Lương           | Nhận lương part-time tháng 4
   01-05-2026 | -1,200,000 đ    | Sinh hoạt       | Tiền phòng trọ và điện nước
+INPUT  >>   Chọn: 3
+
+[HANH DONG] Menu: Báo cáo tháng
+----------------------------------------
+INPUT  >>   Chọn: 4
+INPUT  >>   Nhập số tháng K (Mặc định 3): 6
+
+=======================================================
+  -- TỔNG QUAN CHI TIÊU 6 THÁNG GẦN NHẤT --
+=======================================================
+ * Tháng 06/2026: Tổng thu 7,500,000 đ, Tổng chi 5,080,000 đ, Thặng dư 2,420,000 đ
+ * Tháng 05/2026: Tổng thu 7,000,000 đ, Tổng chi 7,265,000 đ, Thặng dư -265,000 đ ⚠️
+ * Tháng 04/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
+ * Tháng 03/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
+ * Tháng 02/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
+ * Tháng 01/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
+-------------------------------------------------------
+ => TRUNG BÌNH CHI TIÊU TOÀN GIAI ĐOẠN: 2,057,500 đ / tháng.
+=======================================================
+
 INPUT  >>   Chọn: 0
+INPUT  >>   Chọn: 3
+
+[HANH DONG] Menu: Báo cáo tháng
+----------------------------------------
+INPUT  >>   Chọn: 3
+INPUT  >>   Năm  : 2026
+
+=======================================================
+        BÁO CÁO TÀI CHÍNH NĂM 2026        
+=======================================================
+ 💰 Tổng thu nhập năm    : 14,500,000 đ
+ 💸 Tổng chi tiêu năm    : 12,345,000 đ
+ ⚖️ Thặng dư tích lũy năm: 2,155,000 đ 📈
+-------------------------------------------------------
+ 📊 BIỂU ĐỒ TỶ LỆ CHI TIÊU CẢ NĂM GIỮA CÁC DANH MỤC:
+   • Sinh hoạt       | ■■■■                 |   23.2% (2,865,000 đ)
+   • Trả nợ          | ■■■■                 |   20.3% (2,500,000 đ)
+   • Ăn uống         | ■■■                  |   19.8% (2,450,000 đ)
+   • Học tập         | ■■■                  |   17.6% (2,170,000 đ)
+   • Giải trí        | ■                    |    7.5% (930,000 đ)
+   • Cho vay         | ■                    |    6.5% (800,000 đ)
+   • Đi lại          | ■                    |    5.1% (630,000 đ)
+=======================================================
+
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/core/models.py"
