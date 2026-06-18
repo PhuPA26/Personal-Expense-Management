@@ -303,7 +303,6 @@ classDiagram
     FinanceManager "1" *-- "1" TransactionMap : has
     FinanceManager "1" o-- "1" CategoryFinance : uses
 
-...
 ```
 
 
