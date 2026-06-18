@@ -57,7 +57,7 @@ class IncomeState(CategoryState):
 class ExpenseState(CategoryState):
     def __init__(self, category, year, month, limit):
         super().__init__(category, year, month)
-        self.limit = category.limit
+        self.limit = limit
         self.total_expense = 0
         
     def update_transaction(self, old_amount=0, new_amount=0, mode="add"):
