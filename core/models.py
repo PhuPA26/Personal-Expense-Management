@@ -1,4 +1,4 @@
-from CTDL import HashMap
+﻿from core.data_structure import HashMap
 class Transaction:
     def __init__(
         self,
@@ -59,6 +59,7 @@ class ExpenseState(CategoryState):
         super().__init__(category, year, month)
         self.limit = category.limit
         self.total_expense = 0
+        
     def update_transaction(self, old_amount=0, new_amount=0, mode="add"):
         if mode == "add":
             self.total_expense += new_amount

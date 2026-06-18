@@ -1,0 +1,110 @@
+BEGIN_CATEGORIES
+ăn uống|Ăn uống|expense|3000000.0|1
+đi lại|Đi lại|expense|500000.0|1
+học tập|Học tập|expense|2000000.0|1
+sinh hoạt|Sinh hoạt|expense|1000000.0|1
+giải trí|Giải trí|expense|800000.0|1
+lương|Lương|income|0.0|1
+thưởng|Thưởng|income|0.0|1
+cho vay|Cho vay|expense|99999999.0|1
+thu nợ|Thu nợ|income|0.0|1
+đi vay|Đi vay|income|0.0|1
+trả nợ|Trả nợ|expense|99999999.0|1
+END_CATEGORIES
+BEGIN_TRANSACTIONS
+20260618172818574527|5000000.0|2026-05-01|lương|income|Nhận lương part-time tháng 4
+20260618172818603485|1200000.0|2026-05-01|sinh hoạt|expense|Tiền phòng trọ và điện nước
+20260618172818603581|35000.0|2026-05-02|ăn uống|expense|Ăn sáng xôi ruốc
+20260618172818603646|60000.0|2026-05-02|ăn uống|expense|Cơm trưa bình dân
+20260618172818603698|20000.0|2026-05-02|đi lại|expense|Gửi xe tháng ở trường
+20260618172818603750|45000.0|2026-05-03|ăn uống|expense|Bún chả buổi trưa
+20260618172818603797|30000.0|2026-05-03|giải trí|expense|Mua nước mía cùng bạn
+20260618172818603844|50000.0|2026-05-04|ăn uống|expense|Cơm tối
+20260618172818603887|100000.0|2026-05-04|đi lại|expense|Đổ xăng xe máy
+20260618172818603934|500000.0|2026-05-05|cho vay|expense|Tuấn mượn tiền đóng tiền quỹ khóa học
+20260618172818604004|40000.0|2026-05-05|ăn uống|expense|Bánh mì và sữa sáng
+20260618172818604106|65000.0|2026-05-06|ăn uống|expense|Phở bò chiều
+20260618172818604182|150000.0|2026-05-06|học tập|expense|Mua giáo trình Cấu trúc dữ liệu
+20260618172818604247|120000.0|2026-05-07|giải trí|expense|Đi xem phim rạp
+20260618172818604303|55000.0|2026-05-07|ăn uống|expense|Cơm tấm sườn
+20260618172818604360|35000.0|2026-05-08|ăn uống|expense|Cà phê quán cóc
+20260618172818604417|70000.0|2026-05-08|sinh hoạt|expense|Mua bột giặt và kem đánh răng
+20260618172818604477|45000.0|2026-05-09|ăn uống|expense|Bún riêu cua
+20260618172818604533|30000.0|2026-05-09|đi lại|expense|Vá xe máy bị thủng lốp
+20260618172818604596|500000.0|2026-05-10|thu nợ|income|Tuấn chuyển khoản trả lại tiền mượn hôm mùng 5
+20260618172818604660|60000.0|2026-05-10|ăn uống|expense|Cơm trưa văn phòng
+20260618172818604718|40000.0|2026-05-11|ăn uống|expense|Hủ tiếu gõ tối
+20260618172818604776|250000.0|2026-05-11|học tập|expense|Đăng ký tài khoản Premium học Code
+20260618172818604834|55000.0|2026-05-12|ăn uống|expense|Cơm gà xối mỡ
+20260618172818604893|90000.0|2026-05-12|giải trí|expense|Trà sữa với nhóm bạn bài tập lớn
+20260618172818604949|35000.0|2026-05-13|ăn uống|expense|Bánh mì chả cá
+20260618172818605004|45000.0|2026-05-13|ăn uống|expense|Cơm trưa
+20260618172818605065|1000000.0|2026-05-14|đi vay|income|Mượn anh trai tiền mua sắm đồ dùng học tập
+20260618172818605128|850000.0|2026-05-14|học tập|expense|Mua chuột và bàn phím cơ mới để code
+20260618172818605183|50000.0|2026-05-15|ăn uống|expense|Bún đậu mắm tôm trưa
+20260618172818605238|30000.0|2026-05-15|đi lại|expense|Đổ thêm xăng
+20260618172818605295|60000.0|2026-05-16|ăn uống|expense|Cơm tối với bạn
+20260618172818605352|50000.0|2026-05-16|sinh hoạt|expense|Tiền cắt tóc
+20260618172818605408|45000.0|2026-05-17|ăn uống|expense|Phở gà sáng
+20260618172818605465|200000.0|2026-05-17|thưởng|income|Tiền thưởng giải bài tập tuần xuất sắc
+20260618172818605526|55000.0|2026-05-18|ăn uống|expense|Cơm trưa suất đặc biệt
+20260618172818605586|1000000.0|2026-05-18|trả nợ|expense|Chuyển khoản trả nợ cho anh trai mua đồ hôm trước
+20260618172818605647|40000.0|2026-05-19|ăn uống|expense|Bánh cuốn chiều
+20260618172818605705|60000.0|2026-05-19|giải trí|expense|Mua vé gửi xe và nước ngọt công viên
+20260618172818605761|50000.0|2026-05-20|ăn uống|expense|Cơm sườn tối
+20260618172818605817|120000.0|2026-05-20|sinh hoạt|expense|Mua đồ gia dụng nhỏ trong phòng
+20260618172818605876|35000.0|2026-05-21|ăn uống|expense|Xôi gà xé sáng
+20260618172818605932|60000.0|2026-05-22|ăn uống|expense|Bún chả trưa
+20260618172818605987|100000.0|2026-05-22|đi lại|expense|Đổ xăng định kỳ
+20260618172818606042|45000.0|2026-05-23|ăn uống|expense|Cơm văn phòng
+20260618172818606099|150000.0|2026-05-23|giải trí|expense|Đi ăn đồ nướng vỉa hè
+20260618172818606154|55000.0|2026-05-24|ăn uống|expense|Phở bò sốt vang
+20260618172818606212|40000.0|2026-05-25|ăn uống|expense|Bánh mì sốt vang sáng
+20260618172818606268|300000.0|2026-05-25|học tập|expense|Tiền quỹ lớp kỳ này
+20260618172818606323|60000.0|2026-05-26|ăn uống|expense|Cơm trưa suất gia đình
+20260618172818606380|50000.0|2026-05-26|sinh hoạt|expense|Mua thẻ nạp điện thoại
+20260618172818606437|45000.0|2026-05-27|ăn uống|expense|Bún cá chấm
+20260618172818606497|80000.0|2026-05-27|giải trí|expense|Cà phê họp nhóm làm tiểu luận
+20260618172818606553|50000.0|2026-05-28|ăn uống|expense|Cơm tối muộn
+20260618172818606611|300000.0|2026-05-28|cho vay|expense|Cho Dũng cùng tổ mượn mua tài liệu
+20260618172818606666|55000.0|2026-05-29|ăn uống|expense|Cơm tấm trưa
+20260618172818606725|300000.0|2026-05-29|thu nợ|income|Dũng trả lại tiền mượn qua tài khoản
+20260618172818606781|40000.0|2026-05-30|ăn uống|expense|Bánh mì kẹp thịt sáng
+20260618172818606838|100000.0|2026-05-30|đi lại|expense|Đổ xăng xe chuẩn bị về quê
+20260618172818606892|65000.0|2026-05-31|ăn uống|expense|Lẩu cốc liên hoan cuối tháng
+20260618172818606949|5500000.0|2026-06-01|lương|income|Nhận lương part-time tháng 5 nâng hiệu suất
+20260618172818607023|1250000.0|2026-06-01|sinh hoạt|expense|Tiền phòng trọ tháng mới và mạng internet
+20260618172818607084|35000.0|2026-06-02|ăn uống|expense|Xôi thập cẩm sáng
+20260618172818607142|60000.0|2026-06-02|ăn uống|expense|Cơm rang dưa bò trưa
+20260618172818607197|20000.0|2026-06-02|đi lại|expense|Vé gửi xe thư viện trường
+20260618172818607255|45000.0|2026-06-03|ăn uống|expense|Bún bò Huế trưa
+20260618172818607312|50000.0|2026-06-03|giải trí|expense|Mua kem và trà đá với bạn
+20260618172818607371|55000.0|2026-06-04|ăn uống|expense|Cơm sườn nướng tối
+20260618172818607426|100000.0|2026-06-04|đi lại|expense|Đổ xăng xe máy đầy bình
+20260618172818607484|1500000.0|2026-06-05|đi vay|income|Vay bạn Linh đóng tiền học phí tiếng Anh còn thiếu
+20260618172818607544|40000.0|2026-06-05|ăn uống|expense|Bánh mì pate trứng sáng
+20260618172818607600|65000.0|2026-06-06|ăn uống|expense|Phở trộn trưa
+20260618172818607657|500000.0|2026-06-06|học tập|expense|Đăng ký thi chứng chỉ online
+20260618172818607720|1500000.0|2026-06-07|trả nợ|expense|Trả hết tiền học phí mượn Linh hôm trước
+20260618172818607781|55000.0|2026-06-07|ăn uống|expense|Cơm gà chiên mắm
+20260618172818607837|35000.0|2026-06-08|ăn uống|expense|Cà phê sữa đá sáng
+20260618172818607893|90000.0|2026-06-08|sinh hoạt|expense|Mua dầu gội và khăn mặt mới
+20260618172818607951|45000.0|2026-06-09|ăn uống|expense|Mì quảng chiều
+20260618172818608007|60000.0|2026-06-10|ăn uống|expense|Cơm trưa văn phòng
+20260618172818608066|200000.0|2026-06-10|giải trí|expense|Đi hát karaoke sinh nhật bạn
+20260618172818608121|40000.0|2026-06-11|ăn uống|expense|Hủ tiếu nam vang tối
+20260618172818608177|120000.0|2026-06-11|học tập|expense|Mua sổ tay và bút ký cao cấp
+20260618172818608231|55000.0|2026-06-12|ăn uống|expense|Cơm đùi gà nướng
+20260618172818608287|30000.0|2026-06-12|đi lại|expense|Sửa xăm xe máy bị dính đinh
+20260618172818608341|35000.0|2026-06-13|ăn uống|expense|Bánh mì xúc xích sáng
+20260618172818608396|45000.0|2026-06-13|ăn uống|expense|Cơm thịt kho tàu trưa
+20260618172818608454|50000.0|2026-06-14|ăn uống|expense|Bún trộn nam bộ tối
+20260618172818608512|500000.0|2026-06-14|thưởng|income|Học bổng khuyến khích học tập kỳ vừa rồi
+20260618172818608575|55000.0|2026-06-15|ăn uống|expense|Cơm sườn bì chả
+20260618172818608633|100000.0|2026-06-15|đi lại|expense|Đổ xăng chạy đi làm thêm
+20260618172818608689|60000.0|2026-06-16|ăn uống|expense|Mì cay Hàn Quốc tối
+20260618172818608745|35000.0|2026-06-16|sinh hoạt|expense|Mua bóng đèn tuýp thay bóng hỏng
+20260618172818608800|45000.0|2026-06-17|ăn uống|expense|Miến lươn trộn sáng
+20260618172818608857|150000.0|2026-06-17|giải trí|expense|Mua quà sinh nhật nhỏ cho bạn cùng phòng
+20260618172818608946|55000.0|2026-06-18|ăn uống|expense|Cơm trưa văn phòng suất lớn
+END_TRANSACTIONS

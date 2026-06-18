@@ -1,5 +1,5 @@
-from CTDL import HashMap
-import model
+﻿from core.data_structure import HashMap
+from core import models
 
 # Category Index
 # category_id -> Category
@@ -41,7 +41,7 @@ class MonthIndex:
         key = self._get_key(year, month)
 
         if key not in self._months:
-            self._months[key] = model.MonthData()
+            self._months[key] = models.MonthData()
 
         return self._months[key]
 

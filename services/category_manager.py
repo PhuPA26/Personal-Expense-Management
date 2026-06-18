@@ -1,6 +1,6 @@
-import CTDL
-import model
-import HashMap
+﻿
+from core import models
+
 
 class CategoryManager:
 

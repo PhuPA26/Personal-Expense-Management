@@ -1,4 +1,4 @@
-import HashMap
+from data import index_services
 
 class ReportManager:
     def __init__(self, month_index):
@@ -100,7 +100,7 @@ class ReportManager:
         import datetime
         target_date = datetime.date(year, month, day)
         
-        transaction_index = HashMap.TransactionIndex(month_data)
+        transaction_index = index_services.TransactionIndex(month_data)
         first, last = transaction_index.find_by_date(target_date)
         
         if first < 0:
@@ -181,3 +181,80 @@ class ReportManager:
                 print(f"   • {cat_name:<15} | {bar_visual:<20} | {percentage:6.1f}% ({amt:,.0f} đ)")
                 
         print("="*55 + "\n")
+
+    def generate_k_months_report(self, k_months):
+        import datetime
+        now = datetime.datetime.now()
+        current_year = now.year
+        current_month = now.month
+        
+        print("\n" + "="*55)
+        print(f"  -- TỔNG QUAN CHI TIÊU {k_months} THÁNG GẦN NHẤT --")
+        print("="*55)
+        
+        total_k_months_expense = 0
+        months_with_data = 0
+        
+        for i in range(k_months):
+            calc_month = current_month - i
+            calc_year = current_year
+            
+            while calc_month <= 0:
+                calc_month += 12
+                calc_year -= 1
+                
+            month_data = self._month_index.get(calc_year, calc_month)
+            if month_data is None:
+                print(f" * Tháng {calc_month:02d}/{calc_year}: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ")
+                continue
+                
+            months_with_data += 1
+            monthly_income = 0
+            monthly_expense = 0
+            
+            for state_id in month_data.category_states.keys():
+                state = month_data.category_states.get(state_id)
+                cat_type = state.category.type.lower()
+                if cat_type == "income":
+                    monthly_income += state.total_income
+                elif cat_type == "expense":
+                    monthly_expense += state.total_expense
+                    
+            total_k_months_expense += monthly_expense
+            surplus = monthly_income - monthly_expense
+            
+            warning = " ⚠️" if surplus < 0 else ""
+            print(f" * Tháng {calc_month:02d}/{calc_year}: Tổng thu {monthly_income:,.0f} đ, Tổng chi {monthly_expense:,.0f} đ, Thặng dư {surplus:,.0f} đ{warning}")
+            
+        print("-" * 55)
+        if months_with_data > 0:
+            average_expense = total_k_months_expense / k_months
+            print(f" => TRUNG BÌNH CHI TIÊU TOÀN GIAI ĐOẠN: {average_expense:,.0f} đ / tháng.")
+        else:
+            print(" => TRUNG BÌNH CHI TIÊU TOÀN GIAI ĐOẠN: 0 đ / tháng.")
+        print("="*55 + "\n")
+
+    def get_k_months_transactions(self, k_months):
+        import datetime
+        now = datetime.datetime.now()
+        current_year = now.year
+        current_month = now.month
+        
+        all_transactions = []
+        
+        for i in range(k_months):
+            calc_month = current_month - i
+            calc_year = current_year
+            
+            while calc_month <= 0:
+                calc_month += 12
+                calc_year -= 1
+                
+            month_data = self._month_index.get(calc_year, calc_month)
+            if month_data is None:
+                continue
+                
+            all_transactions.extend(month_data.transactions)
+            
+        all_transactions.sort(key=lambda tx: tx.date, reverse=True)
+        return all_transactions

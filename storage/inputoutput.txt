@@ -1,0 +1,214 @@
+INPUT  >>   Chon: 0
+INPUT  >>   Chon: 0
+INPUT  >>   Chon: 1
+
+[HANH DONG] Menu: Quan ly Danh muc
+----------------------------------------
+INPUT  >>   Chon: 5
+
+[HANH DONG] Xem tat ca danh muc
+----------------------------------------
+  KET QUA: Chua co danh muc nao.
+INPUT  >>   Chon: 1
+
+[HANH DONG] Menu: Quan ly Danh muc
+----------------------------------------
+INPUT  >>   Chon: 5
+
+[HANH DONG] Xem tat ca danh muc
+----------------------------------------
+  KET QUA: Danh sach 11 danh muc:
+  ID: ăn uống      | Ten: Ăn uống         | Loai: expense  | Han muc: 3,000,000 d     | Hoat dong
+  ID: đi lại       | Ten: Đi lại          | Loai: expense  | Han muc: 500,000 d       | Hoat dong
+  ID: học tập      | Ten: Học tập         | Loai: expense  | Han muc: 2,000,000 d     | Hoat dong
+  ID: sinh hoạt    | Ten: Sinh hoạt       | Loai: expense  | Han muc: 1,000,000 d     | Hoat dong
+  ID: giải trí     | Ten: Giải trí        | Loai: expense  | Han muc: 800,000 d       | Hoat dong
+  ID: lương        | Ten: Lương           | Loai: income   | Han muc: ---             | Hoat dong
+  ID: thưởng       | Ten: Thưởng          | Loai: income   | Han muc: ---             | Hoat dong
+  ID: cho vay      | Ten: Cho vay         | Loai: expense  | Han muc: 99,999,999 d    | Hoat dong
+  ID: thu nợ       | Ten: Thu nợ          | Loai: income   | Han muc: ---             | Hoat dong
+  ID: đi vay       | Ten: Đi vay          | Loai: income   | Han muc: ---             | Hoat dong
+  ID: trả nợ       | Ten: Trả nợ          | Loai: expense  | Han muc: 99,999,999 d    | Hoat dong
+INPUT  >>   Chon: 2
+
+[HANH DONG] Menu: Quan ly Giao dich
+----------------------------------------
+INPUT  >>   Chon: 0
+INPUT  >>   Chọn: 0
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Menu: Quản lý Danh mục
+----------------------------------------
+INPUT  >>   Chọn: 5
+
+[HANH DONG] Xem tất cả danh mục
+----------------------------------------
+  KẾT QUẢ: Danh sach 11 danh mục:
+  ID: ăn uống      | Tên: Ăn uống         | Loại: expense  | Hạn mức: 3,000,000 d     | Hoạt động
+  ID: đi lại       | Tên: Đi lại          | Loại: expense  | Hạn mức: 500,000 d       | Hoạt động
+  ID: học tập      | Tên: Học tập         | Loại: expense  | Hạn mức: 2,000,000 d     | Hoạt động
+  ID: sinh hoạt    | Tên: Sinh hoạt       | Loại: expense  | Hạn mức: 1,000,000 d     | Hoạt động
+  ID: giải trí     | Tên: Giải trí        | Loại: expense  | Hạn mức: 800,000 d       | Hoạt động
+  ID: lương        | Tên: Lương           | Loại: income   | Hạn mức: ---             | Hoạt động
+  ID: thưởng       | Tên: Thưởng          | Loại: income   | Hạn mức: ---             | Hoạt động
+  ID: cho vay      | Tên: Cho vay         | Loại: expense  | Hạn mức: 99,999,999 d    | Hoạt động
+  ID: thu nợ       | Tên: Thu nợ          | Loại: income   | Hạn mức: ---             | Hoạt động
+  ID: đi vay       | Tên: Đi vay          | Loại: income   | Hạn mức: ---             | Hoạt động
+  ID: trả nợ       | Tên: Trả nợ          | Loại: expense  | Hạn mức: 99,999,999 d    | Hoạt động
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 6
+
+[HANH DONG] Import giao dịch từ file (CSV)
+----------------------------------------
+INPUT  >>   Nhập đường dẫn file CSV (VD: import.csv): import.csv
+  KẾT QUẢ: Đã import thành công 95 giao dịch.
+INPUT  >>   Chọn: 3
+
+[HANH DONG] Menu: Báo cáo tháng
+----------------------------------------
+INPUT  >>   Chọn: 4
+INPUT  >>   Nhập số tháng K (Mặc định 3): 6
+
+=======================================================
+  -- TỔNG QUAN CHI TIÊU 6 THÁNG GẦN NHẤT --
+=======================================================
+ * Tháng 06/2026: Tổng thu 7,500,000 đ, Tổng chi 5,080,000 đ, Thặng dư 2,420,000 đ
+ * Tháng 05/2026: Tổng thu 7,000,000 đ, Tổng chi 7,265,000 đ, Thặng dư -265,000 đ ⚠️
+ * Tháng 04/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
+ * Tháng 03/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
+ * Tháng 02/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
+ * Tháng 01/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
+-------------------------------------------------------
+ => TRUNG BÌNH CHI TIÊU TOÀN GIAI ĐOẠN: 2,057,500 đ / tháng.
+=======================================================
+
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 0
+INPUT  >>   Chọn: 3
+
+[HANH DONG] Menu: Báo cáo tháng
+----------------------------------------
+INPUT  >>   Chọn: 4
+INPUT  >>   Nhập số tháng K (Mặc định 3): 6
+
+=======================================================
+  -- TỔNG QUAN CHI TIÊU 6 THÁNG GẦN NHẤT --
+=======================================================
+ * Tháng 06/2026: Tổng thu 7,500,000 đ, Tổng chi 5,080,000 đ, Thặng dư 2,420,000 đ
+ * Tháng 05/2026: Tổng thu 7,000,000 đ, Tổng chi 7,265,000 đ, Thặng dư -265,000 đ ⚠️
+ * Tháng 04/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
+ * Tháng 03/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
+ * Tháng 02/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
+ * Tháng 01/2026: Tổng thu 0 đ, Tổng chi 0 đ, Thặng dư 0 đ
+-------------------------------------------------------
+ => TRUNG BÌNH CHI TIÊU TOÀN GIAI ĐOẠN: 2,057,500 đ / tháng.
+=======================================================
+
+INPUT  >>   Chọn: 3
+
+[HANH DONG] Menu: Báo cáo tháng
+----------------------------------------
+INPUT  >>   Chọn: 5
+INPUT  >>   Nhập số tháng K (Mặc định 3): 6
+  18-06-2026 | -55,000 đ       | Ăn uống         | Cơm trưa văn phòng suất lớn
+  17-06-2026 | -45,000 đ       | Ăn uống         | Miến lươn trộn sáng
+  17-06-2026 | -150,000 đ      | Giải trí        | Mua quà sinh nhật nhỏ cho bạn cùng phòng
+  16-06-2026 | -60,000 đ       | Ăn uống         | Mì cay Hàn Quốc tối
+  16-06-2026 | -35,000 đ       | Sinh hoạt       | Mua bóng đèn tuýp thay bóng hỏng
+  15-06-2026 | -55,000 đ       | Ăn uống         | Cơm sườn bì chả
+  15-06-2026 | -100,000 đ      | Đi lại          | Đổ xăng chạy đi làm thêm
+  14-06-2026 | -50,000 đ       | Ăn uống         | Bún trộn nam bộ tối
+  14-06-2026 | +500,000 đ      | Thưởng          | Học bổng khuyến khích học tập kỳ vừa rồi
+  13-06-2026 | -35,000 đ       | Ăn uống         | Bánh mì xúc xích sáng
+  13-06-2026 | -45,000 đ       | Ăn uống         | Cơm thịt kho tàu trưa
+  12-06-2026 | -55,000 đ       | Ăn uống         | Cơm đùi gà nướng
+  12-06-2026 | -30,000 đ       | Đi lại          | Sửa xăm xe máy bị dính đinh
+  11-06-2026 | -40,000 đ       | Ăn uống         | Hủ tiếu nam vang tối
+  11-06-2026 | -120,000 đ      | Học tập         | Mua sổ tay và bút ký cao cấp
+  10-06-2026 | -60,000 đ       | Ăn uống         | Cơm trưa văn phòng
+  10-06-2026 | -200,000 đ      | Giải trí        | Đi hát karaoke sinh nhật bạn
+  09-06-2026 | -45,000 đ       | Ăn uống         | Mì quảng chiều
+  08-06-2026 | -35,000 đ       | Ăn uống         | Cà phê sữa đá sáng
+  08-06-2026 | -90,000 đ       | Sinh hoạt       | Mua dầu gội và khăn mặt mới
+  07-06-2026 | -1,500,000 đ    | Trả nợ          | Trả hết tiền học phí mượn Linh hôm trước
+  07-06-2026 | -55,000 đ       | Ăn uống         | Cơm gà chiên mắm
+  06-06-2026 | -65,000 đ       | Ăn uống         | Phở trộn trưa
+  06-06-2026 | -500,000 đ      | Học tập         | Đăng ký thi chứng chỉ online
+  05-06-2026 | +1,500,000 đ    | Đi vay          | Vay bạn Linh đóng tiền học phí tiếng Anh còn thiếu
+  05-06-2026 | -40,000 đ       | Ăn uống         | Bánh mì pate trứng sáng
+  04-06-2026 | -55,000 đ       | Ăn uống         | Cơm sườn nướng tối
+  04-06-2026 | -100,000 đ      | Đi lại          | Đổ xăng xe máy đầy bình
+  03-06-2026 | -45,000 đ       | Ăn uống         | Bún bò Huế trưa
+  03-06-2026 | -50,000 đ       | Giải trí        | Mua kem và trà đá với bạn
+  02-06-2026 | -35,000 đ       | Ăn uống         | Xôi thập cẩm sáng
+  02-06-2026 | -60,000 đ       | Ăn uống         | Cơm rang dưa bò trưa
+  02-06-2026 | -20,000 đ       | Đi lại          | Vé gửi xe thư viện trường
+  01-06-2026 | +5,500,000 đ    | Lương           | Nhận lương part-time tháng 5 nâng hiệu suất
+  01-06-2026 | -1,250,000 đ    | Sinh hoạt       | Tiền phòng trọ tháng mới và mạng internet
+  31-05-2026 | -65,000 đ       | Ăn uống         | Lẩu cốc liên hoan cuối tháng
+  30-05-2026 | -40,000 đ       | Ăn uống         | Bánh mì kẹp thịt sáng
+  30-05-2026 | -100,000 đ      | Đi lại          | Đổ xăng xe chuẩn bị về quê
+  29-05-2026 | -55,000 đ       | Ăn uống         | Cơm tấm trưa
+  29-05-2026 | +300,000 đ      | Thu nợ          | Dũng trả lại tiền mượn qua tài khoản
+  28-05-2026 | -50,000 đ       | Ăn uống         | Cơm tối muộn
+  28-05-2026 | -300,000 đ      | Cho vay         | Cho Dũng cùng tổ mượn mua tài liệu
+  27-05-2026 | -45,000 đ       | Ăn uống         | Bún cá chấm
+  27-05-2026 | -80,000 đ       | Giải trí        | Cà phê họp nhóm làm tiểu luận
+  26-05-2026 | -60,000 đ       | Ăn uống         | Cơm trưa suất gia đình
+  26-05-2026 | -50,000 đ       | Sinh hoạt       | Mua thẻ nạp điện thoại
+  25-05-2026 | -40,000 đ       | Ăn uống         | Bánh mì sốt vang sáng
+  25-05-2026 | -300,000 đ      | Học tập         | Tiền quỹ lớp kỳ này
+  24-05-2026 | -55,000 đ       | Ăn uống         | Phở bò sốt vang
+  23-05-2026 | -45,000 đ       | Ăn uống         | Cơm văn phòng
+  23-05-2026 | -150,000 đ      | Giải trí        | Đi ăn đồ nướng vỉa hè
+  22-05-2026 | -60,000 đ       | Ăn uống         | Bún chả trưa
+  22-05-2026 | -100,000 đ      | Đi lại          | Đổ xăng định kỳ
+  21-05-2026 | -35,000 đ       | Ăn uống         | Xôi gà xé sáng
+  20-05-2026 | -50,000 đ       | Ăn uống         | Cơm sườn tối
+  20-05-2026 | -120,000 đ      | Sinh hoạt       | Mua đồ gia dụng nhỏ trong phòng
+  19-05-2026 | -40,000 đ       | Ăn uống         | Bánh cuốn chiều
+  19-05-2026 | -60,000 đ       | Giải trí        | Mua vé gửi xe và nước ngọt công viên
+  18-05-2026 | -55,000 đ       | Ăn uống         | Cơm trưa suất đặc biệt
+  18-05-2026 | -1,000,000 đ    | Trả nợ          | Chuyển khoản trả nợ cho anh trai mua đồ hôm trước
+  17-05-2026 | -45,000 đ       | Ăn uống         | Phở gà sáng
+  17-05-2026 | +200,000 đ      | Thưởng          | Tiền thưởng giải bài tập tuần xuất sắc
+  16-05-2026 | -60,000 đ       | Ăn uống         | Cơm tối với bạn
+  16-05-2026 | -50,000 đ       | Sinh hoạt       | Tiền cắt tóc
+  15-05-2026 | -50,000 đ       | Ăn uống         | Bún đậu mắm tôm trưa
+  15-05-2026 | -30,000 đ       | Đi lại          | Đổ thêm xăng
+  14-05-2026 | +1,000,000 đ    | Đi vay          | Mượn anh trai tiền mua sắm đồ dùng học tập
+  14-05-2026 | -850,000 đ      | Học tập         | Mua chuột và bàn phím cơ mới để code
+  13-05-2026 | -35,000 đ       | Ăn uống         | Bánh mì chả cá
+  13-05-2026 | -45,000 đ       | Ăn uống         | Cơm trưa
+  12-05-2026 | -55,000 đ       | Ăn uống         | Cơm gà xối mỡ
+  12-05-2026 | -90,000 đ       | Giải trí        | Trà sữa với nhóm bạn bài tập lớn
+  11-05-2026 | -40,000 đ       | Ăn uống         | Hủ tiếu gõ tối
+  11-05-2026 | -250,000 đ      | Học tập         | Đăng ký tài khoản Premium học Code
+  10-05-2026 | +500,000 đ      | Thu nợ          | Tuấn chuyển khoản trả lại tiền mượn hôm mùng 5
+  10-05-2026 | -60,000 đ       | Ăn uống         | Cơm trưa văn phòng
+  09-05-2026 | -45,000 đ       | Ăn uống         | Bún riêu cua
+  09-05-2026 | -30,000 đ       | Đi lại          | Vá xe máy bị thủng lốp
+  08-05-2026 | -35,000 đ       | Ăn uống         | Cà phê quán cóc
+  08-05-2026 | -70,000 đ       | Sinh hoạt       | Mua bột giặt và kem đánh răng
+  07-05-2026 | -120,000 đ      | Giải trí        | Đi xem phim rạp
+  07-05-2026 | -55,000 đ       | Ăn uống         | Cơm tấm sườn
+  06-05-2026 | -65,000 đ       | Ăn uống         | Phở bò chiều
+  06-05-2026 | -150,000 đ      | Học tập         | Mua giáo trình Cấu trúc dữ liệu
+  05-05-2026 | -500,000 đ      | Cho vay         | Tuấn mượn tiền đóng tiền quỹ khóa học
+  05-05-2026 | -40,000 đ       | Ăn uống         | Bánh mì và sữa sáng
+  04-05-2026 | -50,000 đ       | Ăn uống         | Cơm tối
+  04-05-2026 | -100,000 đ      | Đi lại          | Đổ xăng xe máy
+  03-05-2026 | -45,000 đ       | Ăn uống         | Bún chả buổi trưa
+  03-05-2026 | -30,000 đ       | Giải trí        | Mua nước mía cùng bạn
+  02-05-2026 | -35,000 đ       | Ăn uống         | Ăn sáng xôi ruốc
+  02-05-2026 | -60,000 đ       | Ăn uống         | Cơm trưa bình dân
+  02-05-2026 | -20,000 đ       | Đi lại          | Gửi xe tháng ở trường
+  01-05-2026 | +5,000,000 đ    | Lương           | Nhận lương part-time tháng 4
+  01-05-2026 | -1,200,000 đ    | Sinh hoạt       | Tiền phòng trọ và điện nước
+INPUT  >>   Chọn: 0

@@ -1,7 +1,6 @@
 # Hash Node
 
 class HashNode:
-
     def __init__(self, key, value):
         self.key = key
         self.value = value
@@ -11,7 +10,6 @@ class HashNode:
 # Hash Map
 
 class HashMap:
-
     def __init__(self):
         self.__TABLE_SIZE = 1024
         self.__buckets = [None] * self.__TABLE_SIZE

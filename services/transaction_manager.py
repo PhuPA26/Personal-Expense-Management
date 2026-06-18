@@ -1,28 +1,28 @@
-import HashMap
-import model
+﻿from data import index_services
+from core import models
 import datetime
 
 
 class FinanceManager:
     def __init__(self, category_manager):
-        self._month_index = HashMap.MonthIndex()
-        self._transaction_map = HashMap.TransactionMap()
+        self._month_index = index_services.MonthIndex()
+        self._transaction_map = index_services.TransactionMap()
         self._category_manager = category_manager
 
     def _get_or_create_category_state(self, category_index, category, year, month):
         state = category_index.get(category.id)
         if state is None:
             if category.type.lower() == "income":
-                state = model.IncomeState(category, year, month)
+                state = models.IncomeState(category, year, month)
             else:
-                state = model.ExpenseState(category, year, month, category.limit)
+                state = models.ExpenseState(category, year, month, category.limit)
             category_index.add(state)
         return state
 
     def _is_state_empty(self, state):
-        if isinstance(state, model.ExpenseState):
+        if isinstance(state, models.ExpenseState):
             return state.total_expense == 0
-        elif isinstance(state, model.IncomeState):
+        elif isinstance(state, models.IncomeState):
             return state.total_income == 0
         return False
 
@@ -33,9 +33,9 @@ class FinanceManager:
         for month_data in self._month_index._months.values():
             for state_id in month_data.category_states.keys():
                 state = month_data.category_states.get(state_id)
-                if isinstance(state, model.IncomeState):
+                if isinstance(state, models.IncomeState):
                     total_income += state.total_income
-                elif isinstance(state, model.ExpenseState):
+                elif isinstance(state, models.ExpenseState):
                     total_expense += state.total_expense
                     
         return total_income - total_expense
@@ -49,10 +49,10 @@ class FinanceManager:
             raise ValueError("Can only set budget for expense categories.")
             
         month_data = self._month_index.get_or_create(year, month)
-        category_index = HashMap.CategoryIndex(month_data)
+        category_index = index_services.CategoryIndex(month_data)
         
         category_state = self._get_or_create_category_state(category_index, category, year, month)
-        if isinstance(category_state, model.ExpenseState):
+        if isinstance(category_state, models.ExpenseState):
             category_state.set_limit(new_limit)
 
     def suggest_category_by_note(self, note):
@@ -140,11 +140,11 @@ class FinanceManager:
         # Lấy dữ liệu tháng
         month_data = self._month_index.get_or_create(year, month)
 
-        transaction_index = HashMap.TransactionIndex(month_data)
-        category_index = HashMap.CategoryIndex(month_data)
+        transaction_index = index_services.TransactionIndex(month_data)
+        category_index = index_services.CategoryIndex(month_data)
 
         # Tạo Transaction
-        transaction = model.Transaction(
+        transaction = models.Transaction(
             transaction_id,
             amount,
             parsed_date,
@@ -174,7 +174,7 @@ class FinanceManager:
 
         is_budget_exceeded = False
         if (
-            isinstance(category_state, model.ExpenseState)
+            isinstance(category_state, models.ExpenseState)
             and category_state.total_expense > category_state.limit
         ):
             is_budget_exceeded = True
@@ -194,8 +194,8 @@ class FinanceManager:
         # Lấy dữ liệu tháng
         month_data = self._month_index.get(year, month)
 
-        transaction_index = HashMap.TransactionIndex(month_data)
-        category_index = HashMap.CategoryIndex(month_data)
+        transaction_index = index_services.TransactionIndex(month_data)
+        category_index = index_services.CategoryIndex(month_data)
 
 
         # Tìm Transaction
@@ -243,8 +243,8 @@ class FinanceManager:
         # Lấy transaction cũ
         old_month_data = self._month_index.get(old_year, old_month)
 
-        old_transaction_index = HashMap.TransactionIndex(old_month_data)
-        old_category_index = HashMap.CategoryIndex(old_month_data)
+        old_transaction_index = index_services.TransactionIndex(old_month_data)
+        old_category_index = index_services.CategoryIndex(old_month_data)
 
         transaction = old_transaction_index.get_transaction(transaction_id)
         if transaction is None:
@@ -294,8 +294,8 @@ class FinanceManager:
 
             new_month_data = self._month_index.get_or_create(new_year, new_month)
 
-            new_transaction_index = HashMap.TransactionIndex(new_month_data)
-            new_category_index = HashMap.CategoryIndex(new_month_data)
+            new_transaction_index = index_services.TransactionIndex(new_month_data)
+            new_category_index = index_services.CategoryIndex(new_month_data)
 
             # update transaction
             transaction.amount = new_amount
@@ -318,7 +318,7 @@ class FinanceManager:
                 mode="add"
             )
 
-            if isinstance(new_category_state, model.ExpenseState):
+            if isinstance(new_category_state, models.ExpenseState):
                 if new_category_state.total_expense > new_category_state.limit:
                     is_budget_exceeded = True
 
@@ -346,7 +346,7 @@ class FinanceManager:
                     mode="add"
                 )
 
-                if isinstance(new_category_state, model.ExpenseState):
+                if isinstance(new_category_state, models.ExpenseState):
                     if new_category_state.total_expense > new_category_state.limit:
                         is_budget_exceeded = True
 
@@ -358,7 +358,7 @@ class FinanceManager:
                     mode="update"
                 )
 
-                if isinstance(old_category_state, model.ExpenseState):
+                if isinstance(old_category_state, models.ExpenseState):
                     if old_category_state.total_expense > old_category_state.limit:
                         is_budget_exceeded = True
 
