@@ -120,184 +120,190 @@ Tất cả các thao tác (Prompt và Input) đều được hệ thống tự �
 Hệ thống được thiết kế theo mô hình hướng đối tượng phân lớp (Layered Architecture), tách biệt rõ ràng giữa cấu trúc dữ liệu cốt lõi, thực thể lưu trữ, dịch vụ chỉ mục tối ưu và tầng quản lý nghiệp vụ.
 
 ### 📊 Sơ đồ lớp 
+'''mermaid
 
-```mermaid
 classDiagram
-    %% Core & Data Structures
-    class HashNode {
-        +key: String
-        +value: Object
-        +next: HashNode
-        +HashNode(key: String, value: Object)
+    namespace core {
+        class HashNode {
+            +key
+            +value
+            +HashNode next
+            +__init__(key, value)
+        }
+        class HashMap {
+            -__TABLE_SIZE: int
+            -__buckets: list
+            -__count: int
+            +__init__()
+            -_pure_insert(key, value)
+            +insert(key, value)
+            +get(key)
+            +contains_key(key)
+            +remove_key(key)
+            +clear()
+            +keys()
+            +values()
+            +items()
+            +__setitem__(key, value)
+            +__getitem__(key)
+            +__contains__(key)
+            +__delitem__(key)
+            -__hash_function(key)
+            -__rehash()
+        }
+        class Transaction {
+            +transaction_id
+            +amount
+            +date
+            +category_id
+            +transaction_type
+            +note
+            +__init__(transaction_id, amount, date, category_id, transaction_type, note)
+        }
+        class Category {
+            +id
+            +name
+            +type
+            +limit
+            +is_active
+            +__init__(id, name, type, created_at, is_active, limit)
+            +set_limit(new_limit)
+            +deactivate()
+            +activate()
+        }
+        class CategoryState {
+            +Category category
+            +year
+            +month
+            +__init__(category, year, month)
+        }
+        class IncomeState {
+            +total_income
+            +__init__(category, year, month)
+            +update_transaction(old_amount, new_amount, mode)
+        }
+        class ExpenseState {
+            +limit
+            +total_expense
+            +__init__(category, year, month, limit)
+            +update_transaction(old_amount, new_amount, mode)
+            +set_limit(new_limit)
+        }
+        class MonthData {
+            +HashMap category_states
+            +list transactions
+            +__init__()
+        }
     }
 
-    class HashMap {
-        -TABLE_SIZE: int
-        -buckets: List
-        -count: int
-        #_pure_insert(key: String, value: Object) void
-        +insert(key: String, value: Object) void
-        +get(key: String) Object
-        +contains_key(key: String) boolean
-        +remove_key(key: String) void
-        +clear() void
-        +keys() List
-        +values() List
-        +items() List
-        -__hash_function(key: String) int
-        -__rehash() void
+    namespace data {
+        class CategoryIndex {
+            -_category_states
+            +__init__(month_data)
+            +get(category_id)
+            +exists(category_id)
+            +add(category_state)
+            +remove(category_id)
+        }
+        class MonthIndex {
+            +HashMap _months
+            +__init__()
+            -_get_key(year, month)
+            +get(year, month)
+            +exists(year, month)
+            +create(year, month)
+            +get_or_create(year, month)
+            +remove(year, month)
+        }
+        class TransactionIndex {
+            -_transactions
+            +__init__(month_data)
+            +find_by_id(transaction_id)
+            +get_transaction(transaction_id)
+            +find_by_category(category_id)
+            +find_by_amount(amount)
+            +find_by_note(keyword)
+            +find_by_date(date)
+            +add(transaction)
+            +relocate(transaction_id, new_date)
+            +remove(transaction_id)
+            +get_monthly_transactions(year, month)
+        }
+        class TransactionMap {
+            +HashMap _transactions
+            +__init__()
+            +get(transaction_id)
+            +exists(transaction_id)
+            +add(transaction_id, year, month)
+            +remove(transaction_id)
+        }
     }
 
-    %% Models
-    class Transaction {
-        +transaction_id: String
-        +amount: double
-        +date: Date
-        +category_id: String
-        +transaction_type: String
-        +note: String
+    namespace services {
+        class CategoryManager {
+            +list categories
+            +__init__()
+            +add_category(category)
+            +find_by_id(categories, category_id)
+            +find_by_name(categories, name)
+            +find_by_type(categories, category_type)
+            +get(categories, category_id)
+            +get_active_categories()
+        }
+        class CategoryFinance {
+            +__init__()
+            +add_category(category)
+            +remove_category(category_id)
+            +update_category(category_id, new_name, new_type, new_limit, new_created_at)
+        }
+        class ReportManager {
+            +MonthIndex _month_index
+            +__init__(month_index)
+            +generate_monthly_report(year, month)
+            +generate_daily_report(year, month, day)
+            +generate_yearly_report(year)
+            +generate_k_months_report(k_months)
+            +get_k_months_transactions(k_months)
+        }
+        class FinanceManager {
+            +MonthIndex _month_index
+            +TransactionMap _transaction_map
+            +CategoryFinance _category_manager
+            +__init__(category_manager)
+            -_get_or_create_category_state(category_index, category, year, month)
+            -_is_state_empty(state)
+            +get_total_balance()
+            +set_monthly_budget(category_id, year, month, new_limit)
+            +suggest_category_by_note(note)
+            -_check_transaction_id(transaction_id)
+            -_check_amount(amount)
+            -_parse_and_validate_date(date_str)
+            -_check_category(category_id)
+            +add_transaction(transaction_id, amount, date, category_id, note)
+            +delete_transaction(transaction_id)
+            +update_transaction(transaction_id, amount, date, category_id, note)
+        }
     }
 
-    class Category {
-        +id: String
-        +name: String
-        +type: String
-        +limit: double
-        +is_active: boolean
-        +set_limit(new_limit: double) void
-        +deactivate() void
-        +activate() void
-    }
+    HashMap "1" *-- "many" HashNode : contains
+    IncomeState --|> CategoryState : inherits
+    ExpenseState --|> CategoryState : inherits
+    CategoryState "many" *-- "1" Category : has
+    MonthData "1" *-- "1" HashMap : has
+    MonthData "1" *-- "many" Transaction : has
+    
+    CategoryIndex "1" o-- "many" CategoryState : manages
+    MonthIndex "1" *-- "1" HashMap : uses
+    TransactionIndex "1" o-- "many" Transaction : manages
+    TransactionMap "1" *-- "1" HashMap : uses
 
-    class CategoryState {
-        <<abstract>>
-        +category: Category
-        +year: int
-        +month: int
-    }
+    CategoryManager "1" o-- "many" Category : manages
+    CategoryFinance --|> CategoryManager : inherits
+    ReportManager "1" o-- "1" MonthIndex : uses
+    FinanceManager "1" *-- "1" MonthIndex : has
+    FinanceManager "1" *-- "1" TransactionMap : has
+    FinanceManager "1" o-- "1" CategoryFinance : uses
 
-    class IncomeState {
-        +total_income: double
-        +update_transaction(old_amount: double, new_amount: double, mode: String) void
-    }
-
-    class ExpenseState {
-        +limit: double
-        +total_expense: double
-        +update_transaction(old_amount: double, new_amount: double, mode: String) void
-        +set_limit(new_limit: double) void
-    }
-
-    class MonthData {
-        +category_states: HashMap
-        +transactions: List
-    }
-
-    %% Data Index Services
-    class CategoryIndex {
-        -_category_states: HashMap
-        +get(category_id: String) CategoryState
-        +exists(category_id: String) boolean
-        +add(category_state: CategoryState) void
-        +remove(category_id: String) void
-    }
-
-    class MonthIndex {
-        -_months: HashMap
-        -_get_key(year: int, month: int) String
-        +get(year: int, month: int) MonthData
-        +exists(year: int, month: int) boolean
-        +create(year: int, month: int) MonthData
-        +get_or_create(year: int, month: int) MonthData
-        +remove(year: int, month: int) void
-    }
-
-    class TransactionIndex {
-        -_transactions: List
-        +find_by_id(transaction_id: String) int
-        +get_transaction(transaction_id: String) Transaction
-        +find_by_category(category_id: String) List
-        +find_by_amount(amount: double) List
-        +find_by_note(keyword: String) List
-        +find_by_date(date: Date) Tuple
-        +add(transaction: Transaction) void
-        +relocate(transaction_id: String, new_date: Date) boolean
-        +remove(transaction_id: String) boolean
-        +get_monthly_transactions(year: int, month: int) List
-    }
-
-    class TransactionMap {
-        -_transactions: HashMap
-        +get(transaction_id: String) Tuple
-        +exists(transaction_id: String) boolean
-        +add(transaction_id: String, year: int, month: int) void
-        +remove(transaction_id: String) void
-    }
-
-    %% Services & Business Logic
-    class CategoryManager {
-        +categories: List
-        +add_category(category: Category) void
-        +find_by_id(categories: List, category_id: String) int
-        +find_by_name(categories: List, name: String) int
-        +find_by_type(categories: List, category_type: String) List
-        +get(categories: List, category_id: String) Category
-        +get_active_categories() List
-    }
-
-    class CategoryFinance {
-        +add_category(category: Category) void
-        +remove_category(category_id: String) void
-        +update_category(category_id: String, new_name: String, new_type: String, new_limit: double) void
-    }
-
-    class FinanceManager {
-        -_month_index: MonthIndex
-        -_transaction_map: TransactionMap
-        -_category_manager: CategoryManager
-        -_get_or_create_category_state(category_index: CategoryIndex, category: Category, year: int, month: int) CategoryState
-        -_is_state_empty(state: CategoryState) boolean
-        +get_total_balance() double
-        +set_monthly_budget(category_id: String, year: int, month: int, new_limit: double) void
-        +suggest_category_by_note(note: String) String
-        +add_transaction(transaction_id: String, amount: double, date: String, category_id: String, note: String) boolean
-        +delete_transaction(transaction_id: String) void
-        +update_transaction(transaction_id: String, amount: double, date: String, category_id: String, note: String) boolean
-    }
-
-    class ReportManager {
-        -_month_index: MonthIndex
-        +generate_monthly_report(year: int, month: int) void
-        +generate_daily_report(year: int, month: int, day: int) void
-        +generate_yearly_report(year: int) void
-        +generate_k_months_report(k_months: int) void
-        +get_k_months_transactions(k_months: int) List
-    }
-
-    %% Relationships (Mối quan hệ)
-    CategoryState <|-- IncomeState : Kế thừa
-    CategoryState <|-- ExpenseState : Kế thừa
-    CategoryManager <|-- CategoryFinance : Kế thừa
-
-    HashNode --> HashNode : next (Xử lý va chạm)
-    HashMap *-- HashNode : buckets (Chứa gói phần tử)
-
-    MonthData *-- HashMap : category_states (Quản lý trạng thái tháng)
-    MonthData *-- Transaction : transactions (Danh sách giao dịch tăng dần)
-
-    CategoryState --> Category : category (Tham chiếu gốc)
-
-    MonthIndex *-- HashMap : _months (Ánh xạ YYYY-MM)
-    TransactionMap *-- HashMap : _transactions (Định vị nhanh ID)
-
-    CategoryIndex --> HashMap : _category_states
-    TransactionIndex --> MonthData : _transactions
-
-    FinanceManager --> MonthIndex
-    FinanceManager --> TransactionMap
-    FinanceManager --> CategoryManager
-
-    ReportManager --> MonthIndex
 
 ```
 
