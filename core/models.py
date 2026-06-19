@@ -23,6 +23,7 @@ class Category:
         self.type = type  # "income" or "expense"
         self.limit = limit  # Mặc định là 0
         self.is_active = is_active # True nếu đang hoạt động, False nếu đã bị vô hiệu hóa
+        self.created_at = created_at
     
     def set_limit(self, new_limit):
         self.limit = new_limit
