@@ -188,3 +188,340 @@ INPUT  >>   Năm  : 2026
 =======================================================
 
 INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/core/models.py"
+INPUT  >>   Chọn: 3
+
+[HANH DONG] Menu: Báo cáo tháng
+----------------------------------------
+INPUT  >>   Chọn: 2
+INPUT  >>   Năm  : 2026
+INPUT  >>   Tháng: 5
+
+=======================================================
+        BÁO CÁO TÀI CHÍNH THÁNG 05/2026        
+=======================================================
+ 💰 Tổng thu nhập    : 7,000,000 đ
+ 💸 Tổng chi tiêu    : 7,265,000 đ
+ ⚖️ Thặng dư tích lũy: -265,000 đ 📉
+-------------------------------------------------------
+ 📊 BIỂU ĐỒ TỶ LỆ CHI TIÊU GIỮA CÁC DANH MỤC:
+   • Giải trí        | ■                    |    7.3% (530,000 đ)
+   • Đi lại          | ■                    |    5.2% (380,000 đ)
+   • Sinh hoạt       | ■■■■                 |   20.5% (1,490,000 đ)
+   • Học tập         | ■■■■                 |   21.3% (1,550,000 đ)
+   • Trả nợ          | ■■                   |   13.8% (1,000,000 đ)
+   • Cho vay         | ■■                   |   11.0% (800,000 đ)
+   • Ăn uống         | ■■■■                 |   20.9% (1,515,000 đ)
+-------------------------------------------------------
+DANH SÁCH DANH MỤC VƯỢT NGÂN SÁCH (BUDGET):
+   ❌ [Sinh hoạt] ĐÃ VƯỢT HẠN MỨC!
+      - Ngân sách đặt ra : 1,000,000 đ
+      - Thực tế đã chi   : 1,490,000 đ
+      - Số tiền vượt quá : +490,000 đ (49.0%)
+
+=======================================================
+
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Menu: Quản lý Danh mục
+----------------------------------------
+INPUT  >>   Chọn: 5
+
+[HANH DONG] Xem tất cả danh mục
+----------------------------------------
+  KẾT QUẢ: Danh sach 11 danh mục:
+  ID: ăn uống      | Tên: Ăn uống         | Loại: expense  | Hạn mức: 3,000,000 d     | Hoạt động
+  ID: đi lại       | Tên: Đi lại          | Loại: expense  | Hạn mức: 500,000 d       | Hoạt động
+  ID: học tập      | Tên: Học tập         | Loại: expense  | Hạn mức: 2,000,000 d     | Hoạt động
+  ID: sinh hoạt    | Tên: Sinh hoạt       | Loại: expense  | Hạn mức: 1,000,000 d     | Hoạt động
+  ID: giải trí     | Tên: Giải trí        | Loại: expense  | Hạn mức: 800,000 d       | Hoạt động
+  ID: lương        | Tên: Lương           | Loại: income   | Hạn mức: ---             | Hoạt động
+  ID: thưởng       | Tên: Thưởng          | Loại: income   | Hạn mức: ---             | Hoạt động
+  ID: cho vay      | Tên: Cho vay         | Loại: expense  | Hạn mức: 99,999,999 d    | Hoạt động
+  ID: thu nợ       | Tên: Thu nợ          | Loại: income   | Hạn mức: ---             | Hoạt động
+  ID: đi vay       | Tên: Đi vay          | Loại: income   | Hạn mức: ---             | Hoạt động
+  ID: trả nợ       | Tên: Trả nợ          | Loại: expense  | Hạn mức: 99,999,999 d    | Hoạt động
+INPUT  >>   Chọn: 0
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Thêm giao dịch
+----------------------------------------
+INPUT  >>   Số tiền (đ)      : 5000000
+INPUT  >>   Ngày (dd-mm-yyyy): 20-6-2026
+INPUT  >>   Ghi chú          : Ăn sáng
+INPUT  >>   ? Gợi ý: Ghi chú này có vẻ thuộc danh mục 'ăn uống'.
+  Bạn có muốn chọn mục 'ăn uống' không? (Enter/y để đồng ý, n để chọn mục khác): y
+  KẾT QUẢ: Thêm giao dịch thanh cong. (ID=TX20260620080650, So tien=5,000,000d, Ngay=20-6-2026)
+  ⚠️ CẢNH BÁO: Giao dịch này làm vượt ngân sách tháng!
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Thêm giao dịch
+----------------------------------------
+INPUT  >>   Số tiền (đ)      : 5000000
+INPUT  >>   Ngày (dd-mm-yyyy): 20-6-2026
+INPUT  >>   Ghi chú          : ăn
+INPUT  >>   ? Gợi ý: Ghi chú này có vẻ thuộc danh mục 'ăn uống'.
+  Bạn có muốn chọn mục 'ăn uống' không? (Enter/y để đồng ý, n để chọn mục khác): y
+  KẾT QUẢ: Thêm giao dịch thanh cong. (ID=TX20260620080943, So tien=5,000,000d, Ngay=20-6-2026)
+  ⚠️ CẢNH BÁO: Giao dịch này làm vượt ngân sách tháng!
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Thêm giao dịch
+----------------------------------------
+INPUT  >>   Số tiền (đ)      : 3100000
+INPUT  >>   Ngày (dd-mm-yyyy): 20-6-2026
+INPUT  >>   Ghi chú          : Ăn Uống
+INPUT  >>   ? Gợi ý: Ghi chú này có vẻ thuộc danh mục 'ăn uống'.
+  Bạn có muốn chọn mục 'ăn uống' không? (Enter/y để đồng ý, n để chọn mục khác): y
+  KẾT QUẢ: Thêm giao dịch thanh cong. (ID=TX20260620081230, So tien=3,100,000d, Ngay=20-6-2026)
+  ⚠️ CẢNH BÁO: Giao dịch này làm vượt ngân sách tháng!
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Thêm giao dịch
+----------------------------------------
+INPUT  >>   Số tiền (đ)      : 20000000
+INPUT  >>   Ngày (dd-mm-yyyy): 20-06-206
+INPUT  >>   Ghi chú          : Luong
+INPUT  >>   Chọn danh mục (Nhập Tên): Lương
+  KẾT QUẢ: Lỗi - Date must be in format dd-mm-yyyy and be valid.
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Thêm giao dịch
+----------------------------------------
+INPUT  >>   Số tiền (đ)      : 20000000
+INPUT  >>   Ngày (dd-mm-yyyy): 20-6-2026
+INPUT  >>   Ghi chú          : Lương
+INPUT  >>   ? Gợi ý: Ghi chú này có vẻ thuộc danh mục 'lương'.
+  Bạn có muốn chọn mục 'lương' không? (Enter/y để đồng ý, n để chọn mục khác): y
+  KẾT QUẢ: Thêm giao dịch thanh cong. (ID=TX20260620081353, So tien=20,000,000d, Ngay=20-6-2026)
+INPUT  >>   Chọn: 0
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Thêm giao dịch
+----------------------------------------
+INPUT  >>   Số tiền (đ)      : 3100000
+INPUT  >>   Ngày (dd-mm-yyyy): 20-6-2026
+INPUT  >>   Ghi chú          : Ăn uống
+INPUT  >>   ? Gợi ý: Ghi chú này có vẻ thuộc danh mục 'ăn uống'.
+  Bạn có muốn chọn mục 'ăn uống' không? (Enter/y để đồng ý, n để chọn mục khác): y
+  KẾT QUẢ: Thêm giao dịch thanh cong. (ID=TX20260620081925, So tien=3,100,000d, Ngay=20-6-2026)
+  [!] CẢNH BÁO: Giao dịch này làm vượt ngân sách tháng!
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Thêm giao dịch
+----------------------------------------
+INPUT  >>   Số tiền (đ)      : 3100000
+INPUT  >>   Ngày (dd-mm-yyyy): 7-5-2026
+INPUT  >>   Ghi chú          : an tiec
+INPUT  >>   Chọn danh mục (Nhập Tên): Ăn uống
+  KẾT QUẢ: Lỗi - Category does not exist.
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Thêm giao dịch
+----------------------------------------
+INPUT  >>   Số tiền (đ)      : 100000
+INPUT  >>   Ngày (dd-mm-yyyy): 7-5-2026
+INPUT  >>   Ghi chú          : Ăn uống
+INPUT  >>   ? Gợi ý: Ghi chú này có vẻ thuộc danh mục 'ăn uống'.
+  Bạn có muốn chọn mục 'ăn uống' không? (Enter/y để đồng ý, n để chọn mục khác): y
+  KẾT QUẢ: Thêm giao dịch thanh cong. (ID=TX20260620082141, So tien=100,000d, Ngay=7-5-2026)
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Thêm giao dịch
+----------------------------------------
+INPUT  >>   Số tiền (đ)      : 3000000
+INPUT  >>   Ngày (dd-mm-yyyy): 7-5-2026
+INPUT  >>   Ghi chú          : an tiec
+INPUT  >>   Chọn danh mục (Nhập Tên): ăn uống
+  KẾT QUẢ: Thêm giao dịch thanh cong. (ID=TX20260620082218, So tien=3,000,000d, Ngay=7-5-2026)
+  ⚠️ CẢNH BÁO: Giao dịch này làm vượt ngân sách tháng!
+INPUT  >>   Chọn: 0
+INPUT  >>   Chọn: 0
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Thêm giao dịch
+----------------------------------------
+INPUT  >>   Số tiền (đ)      : 300000
+INPUT  >>   Ngày (dd-mm-yyyy): 20-6-2026
+INPUT  >>   Ghi chú          : to chuc sinh nhat
+INPUT  >>   Chọn danh mục (Nhập Tên): ăn uống
+  KẾT QUẢ: Thêm giao dịch thanh cong. (ID=TX20260620082312, So tien=300,000d, Ngay=20-6-2026)
+  ⚠️ CẢNH BÁO: Giao dịch này làm vượt ngân sách tháng!
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Thêm giao dịch
+----------------------------------------
+INPUT  >>   Số tiền (đ)      : 300000
+INPUT  >>   Ngày (dd-mm-yyyy): 7-5-2026
+INPUT  >>   Ghi chú          : an tiec sinh nhat
+INPUT  >>   ? Gợi ý: Ghi chú này có vẻ thuộc danh mục 'ăn uống'.
+  Bạn có muốn chọn mục 'ăn uống' không? (Enter/y để đồng ý, n để chọn mục khác): y
+  KẾT QUẢ: Thêm giao dịch thanh cong. (ID=TX20260620082421, So tien=300,000d, Ngay=7-5-2026)
+  ⚠️ CẢNH BÁO: Giao dịch này làm vượt ngân sách tháng!
+INPUT  >>   Chọn: 3
+
+[HANH DONG] Menu: Báo cáo tháng
+----------------------------------------
+INPUT  >>   Chọn: 2
+INPUT  >>   Năm  : 2026
+INPUT  >>   Tháng: 6
+
+=======================================================
+        BÁO CÁO TÀI CHÍNH THÁNG 06/2026        
+=======================================================
+ 💰 Tổng thu nhập    : 27,500,000 đ
+ 💸 Tổng chi tiêu    : 21,580,000 đ
+ ⚖️ Thặng dư tích lũy: 5,920,000 đ 📈
+-------------------------------------------------------
+ 📊 BIỂU ĐỒ TỶ LỆ CHI TIÊU GIỮA CÁC DANH MỤC:
+   • Giải trí        | ·                    |    1.9% (400,000 đ)
+   • Đi lại          | ·                    |    1.2% (250,000 đ)
+   • Sinh hoạt       | ■                    |    6.4% (1,375,000 đ)
+   • Học tập         | ·                    |    2.9% (620,000 đ)
+   • Trả nợ          | ■                    |    7.0% (1,500,000 đ)
+   • Ăn uống         | ■■■■■■■■■■■■■■■■     |   80.8% (17,435,000 đ)
+-------------------------------------------------------
+DANH SÁCH DANH MỤC VƯỢT NGÂN SÁCH (BUDGET):
+   ❌ [Sinh hoạt] ĐÃ VƯỢT HẠN MỨC!
+      - Ngân sách đặt ra : 1,000,000 đ
+      - Thực tế đã chi   : 1,375,000 đ
+      - Số tiền vượt quá : +375,000 đ (37.5%)
+
+   ❌ [Ăn uống] ĐÃ VƯỢT HẠN MỨC!
+      - Ngân sách đặt ra : 3,000,000 đ
+      - Thực tế đã chi   : 17,435,000 đ
+      - Số tiền vượt quá : +14,435,000 đ (481.2%)
+
+=======================================================
+
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/main.py"
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 6
+
+[HANH DONG] Import giao dịch từ file (CSV)
+----------------------------------------
+INPUT  >>   Nhập đường dẫn file CSV (VD: import.csv): transactions_stress_test.csv
+  KẾT QUẢ: Đã import thành công 0 giao dịch.
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/main.py"
+INPUT  >>   Chọn: 6
+
+[HANH DONG] Import giao dịch từ file (CSV)
+----------------------------------------
+INPUT  >>   Nhập đường dẫn file CSV (VD: import.csv): transactions_stress_test.csv
+  KẾT QUẢ: Đã import thành công 0 giao dịch.
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/tests/gen_data.py"
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/tests/gen_data.py"
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/tests/gen_data.py"
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/main.py"
+INPUT  >>   Chọn: 6
+
+[HANH DONG] Import giao dịch từ file (CSV)
+----------------------------------------
+INPUT  >>   Nhập đường dẫn file CSV (VD: import.csv): transactions_stress_test.csv
+  KẾT QUẢ: Lỗi - Không tìm thấy file 'transactions_stress_test.csv'. Vui lòng kiểm tra lại.
+INPUT  >>   Chọn: 6
+
+[HANH DONG] Import giao dịch từ file (CSV)
+----------------------------------------
+INPUT  >>   Nhập đường dẫn file CSV (VD: import.csv): transactions_stress_test.csv
+  KẾT QUẢ: Đã import thành công 0 giao dịch.
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/main.py"
+INPUT  >>   Chọn: 6
+
+[HANH DONG] Import giao dịch từ file (CSV)
+----------------------------------------
+INPUT  >>   Nhập đường dẫn file CSV (VD: import.csv): transactions_stress_test.csv
+  KẾT QUẢ: Đã import thành công 0 giao dịch.
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/main.py"
+INPUT  >>   Chọn: 6
+
+[HANH DONG] Import giao dịch từ file (CSV)
+----------------------------------------
+INPUT  >>   Nhập đường dẫn file CSV (VD: import.csv): transactions_stress_test.csv
+  KẾT QUẢ: Đã import thành công 0 giao dịch.
+INPUT  >>   Nhập đường dẫn file CSV (VD: import.csv): transactions_stress_test.csv
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 6
+
+[HANH DONG] Import giao dịch từ file (CSV)
+----------------------------------------
+INPUT  >>   Nhập đường dẫn file CSV (VD: import.csv): transactions_stress_test.csv
+  KẾT QUẢ: Đã import thành công 0 giao dịch.
+INPUT  >>   Chọn: 
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/main.py"
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/main.py"
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Sửa giao dịch
+----------------------------------------
+INPUT  >>   ID giao dịch cần sửa: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/main.py"
+  KẾT QUẢ: Lỗi - Transaction does not exist.
+INPUT  >>   Chọn: 
+INPUT  >>   Chọn: 6
+
+[HANH DONG] Import giao dịch từ file (CSV)
+----------------------------------------
+INPUT  >>   Nhập đường dẫn file CSV (VD: import.csv): transactions_stress_test.csv
+  KẾT QUẢ: Đã import thành công 0 giao dịch.
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/main.py"
+INPUT  >>   Chọn: & C:/Users/maidu/AppData/Roaming/uv/python/cpython-3.14.6-windows-x86_64-none/python.exe "c:/Users/maidu/OneDrive - Hanoi University of Science and Technology/Documents/Personal-Expense-Management/main.py"
+INPUT  >>   Chọn: 0
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Menu: Quản lý Danh mục
+----------------------------------------
+INPUT  >>   Chọn: 1
+
+[HANH DONG] Thêm danh mục
+----------------------------------------
+INPUT  >>   Tên danh mục         : Sinh hoạt
+INPUT  >>   Loại (income/expense): expense
+INPUT  >>   Hạn mức (đ)          : 100000000
+  KẾT QUẢ: Lỗi - Category name already exists
+INPUT  >>   Chọn: 2
+
+[HANH DONG] Menu: Quản lý Giao dịch
+----------------------------------------
+INPUT  >>   Chọn: 6
+
+[HANH DONG] Import giao dịch từ file (CSV)
+----------------------------------------
+INPUT  >>   Nhập đường dẫn file CSV (VD: import.csv): transactions_stress_test.csv
+  KẾT QUẢ: Đã import thành công 10000 giao dịch.

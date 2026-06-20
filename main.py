@@ -525,21 +525,87 @@ def _import_transactions(finance_manager, category_finance):
     
     try:
         with open(file_path, mode='r', encoding='utf-8-sig') as file:
-            reader = csv.reader(file)
+            # Read first line to detect delimiter and header
+            first_line = file.readline()
+            file.seek(0)
+            
+            delimiter = ','
+            if '|' in first_line:
+                delimiter = '|'
+                
+            reader = csv.reader(file, delimiter=delimiter)
             success_count = 0
             
-            for line_num, row in enumerate(reader, 1):
-                if not row or len(row) < 4:
+            header = next(reader, None)
+            if not header:
+                _print_result("  KẾT QUẢ: File CSV trống.")
+                return
+                
+            header_clean = [col.strip().lower() for col in header]
+            
+            # Map column indices from header
+            idx_date = -1
+            idx_amount = -1
+            idx_cat_name = -1
+            idx_note = -1
+            idx_tx_id = -1
+            
+            for idx, col in enumerate(header_clean):
+                if 'date' in col or 'ngay' in col or 'ngày' in col:
+                    idx_date = idx
+                elif 'amount' in col or 'sotien' in col or 'số tiền' in col or 'so tien' in col:
+                    idx_amount = idx
+                elif 'category_name' in col or 'ten danh muc' in col or 'tên danh mục' in col or 'category name' in col:
+                    idx_cat_name = idx
+                elif 'note' in col or 'ghi chu' in col or 'ghi chú' in col:
+                    idx_note = idx
+                elif 'transaction_id' in col or 'ma gd' in col or 'mã gd' in col:
+                    idx_tx_id = idx
+            
+            has_valid_mapping = (idx_date != -1 and idx_amount != -1 and idx_cat_name != -1)
+            
+            # Check if header is actually a data row (doesn't contain header keywords)
+            is_header_actual_data = False
+            first_cell = header_clean[0]
+            if not (first_cell.startswith('#') or first_cell in ['transaction_id', 'date', 'ngay', 'ngày', 'ma gd', 'mã gd']):
+                is_header_actual_data = True
+                file.seek(0)
+                reader = csv.reader(file, delimiter=delimiter)
+                
+            for line_num, row in enumerate(reader, 1 if is_header_actual_data else 2):
+                if not row or len(row) < 3:
                     continue
                 
-                first_cell = row[0].strip().lower()
-                if first_cell.startswith('#') or first_cell == 'ngày' or first_cell == 'ngay':
+                try:
+                    if has_valid_mapping and not is_header_actual_data:
+                        date_str = row[idx_date].strip()
+                        amount_str = row[idx_amount].strip()
+                        category_name = row[idx_cat_name].strip()
+                        note = row[idx_note].strip() if idx_note != -1 and idx_note < len(row) else ""
+                        tx_id_from_file = row[idx_tx_id].strip() if idx_tx_id != -1 and idx_tx_id < len(row) else None
+                    else:
+                        # Fallback based on column count
+                        if len(row) >= 7:
+                            tx_id_from_file = row[0].strip()
+                            date_str = row[1].strip()
+                            category_name = row[3].strip()
+                            amount_str = row[5].strip()
+                            note = row[6].strip()
+                        else:
+                            tx_id_from_file = None
+                            date_str = row[0].strip()
+                            amount_str = row[1].strip()
+                            category_name = row[2].strip()
+                            note = row[3].strip() if len(row) > 3 else ""
+                except IndexError:
+                    _print(f"  [Lỗi Dòng {line_num}] Thiếu cột dữ liệu. Bỏ qua.")
                     continue
                 
-                date_str = row[0].strip()
-                amount_str = row[1].strip()
-                category_name = row[2].strip()
-                note = row[3].strip()
+                if date_str.lower() in ['date', 'ngay', 'ngày']:
+                    continue
+                
+                # Normalize date separator from / to -
+                date_str = date_str.replace('/', '-')
                 
                 cat_idx = category_finance.find_by_name(category_finance.categories, category_name)
                 if cat_idx == -1:
@@ -554,7 +620,10 @@ def _import_transactions(finance_manager, category_finance):
                     _print(f"  [Lỗi Dòng {line_num}] Số tiền '{amount_str}' không hợp lệ. Bỏ qua.")
                     continue
                 
-                transaction_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")
+                if tx_id_from_file:
+                    transaction_id = tx_id_from_file
+                else:
+                    transaction_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")
                 
                 try:
                     finance_manager.add_transaction(transaction_id, amount, date_str, category_id, note)
