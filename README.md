@@ -1,70 +1,141 @@
 ---
 
-# 💰 HỆ THỐNG QUẢN LÝ TÀI CHÍNH CÁ NHÂN (PERSONAL-EXPENSE-MANAGEMENT)
+# Personal Expense Management
 
-Dự án này là một ứng dụng giao diện dòng lệnh (CLI) giúp người dùng quản lý thu chi cá nhân một cách có hệ thống và chi tiết. Hệ thống giải quyết bài toán theo dõi dòng tiền, kiểm soát ngân sách và cung cấp cái nhìn tổng quan về tình hình tài chính thông qua các báo cáo trực quan mà không cần phụ thuộc vào hệ quản trị cơ sở dữ liệu bên ngoài.
+Một ứng dụng quản lý chi tiêu cá nhân mạnh mẽ, được xây dựng trên nền tảng ngôn ngữ Python thuần với tư duy cấu trúc dữ liệu giải thuật nâng cao và mô hình kiến trúc sạch (Clean Architecture). Thay vì phụ thuộc vào các cấu trúc dữ liệu có sẵn của Python như `dict` hay `list`, dự án tự triển khai các bảng băm (HashMap) và cơ chế chỉ mục chuyên biệt để tối ưu hóa hiệu năng.
 
-Ứng dụng đặc biệt chú trọng vào việc xây dựng nền tảng khoa học máy tính vững chắc bằng cách tự triển khai các cấu trúc dữ liệu từ đầu như Bảng băm (HashMap) và Thuật toán tìm kiếm nhị phân (Binary Search) để tối ưu hóa hiệu suất truy xuất.
+## 🏛️ Kiến Trúc Hệ Thống (System Architecture)
 
----
-
-## 🚀 1. CÁC TÍNH NĂNG NỔI BẬT (FEATURES)
-
-* **Quản lý Danh mục (Categories):** Hỗ trợ thêm mới, chỉnh sửa, và xóa mềm (soft delete) các danh mục thu/chi để bảo toàn tính toàn vẹn dữ liệu lịch sử.
-* **Kiểm soát Ngân sách (Budgeting):** Cho phép thiết lập hạn mức chi tiêu cho từng danh mục và tự động phát cảnh báo khi giao dịch mới làm vượt ngân sách tháng.
-* **Quản lý Giao dịch (Transactions):** Ghi nhận chi tiết số tiền, ngày tháng, danh mục và ghi chú; hỗ trợ tự động gợi ý danh mục dựa trên lịch sử ghi chú.
-* **Hệ thống Báo cáo Đa dạng:** Trích xuất báo cáo tài chính theo ngày, tháng, năm, hoặc chu kỳ K tháng gần nhất kèm theo biểu đồ ASCII trực quan biểu diễn tỷ trọng chi tiêu.
-* **Lưu trữ & Khôi phục Dữ liệu (I/O):** Serialize toàn bộ hệ thống object thành file text tùy chỉnh (`storage/data.txt`) và hỗ trợ tính năng Import giao dịch hàng loạt từ file CSV.
-* **Tối ưu hóa Tra cứu:** Áp dụng thuật toán Binary Search để tra cứu giao dịch theo ngày và sử dụng Custom HashMap để quản lý trạng thái phân mục theo từng tháng.
-
----
-
-## 🛠️ 2. CÔNG NGHỆ & THƯ VIỆN SỬ DỤNG (TECH STACK)
-
-Dự án được phát triển thuần túy bằng Python tiêu chuẩn, không sử dụng các framework hay thư viện bên thứ ba nhằm tối đa hóa khả năng di động và tập trung vào kỹ năng thiết kế thuật toán cốt lõi.
-
-| Công nghệ / Thư viện | Phiên bản | Mục đích / Chức năng trong dự án |
-| --- | --- | --- |
-| **Python** | v3.8+ | Xây dựng toàn bộ logic, cấu trúc dữ liệu và giao diện CLI. |
-| **datetime** | Built-in | Xử lý, phân tích định dạng chuỗi ngày tháng và tính toán chu kỳ thời gian. |
-| **csv** | Built-in | Đọc và bóc tách dữ liệu từ file đầu vào để import giao dịch hàng loạt. |
-
----
-
-## 📂 3. CẤU TRÚC THƯ MỤC (DIRECTORY STRUCTURE)
-
-Dự án được phân tách thành các module độc lập, đảm bảo tính đóng gói và dễ dàng bảo trì.
+Dự án tuân thủ nghiêm ngặt nguyên lý phân rã trách nhiệm (Separation of Concerns), chia hệ thống thành các tầng xử lý riêng biệt:
 
 ```text
-├── core/
-│   ├── data_structure.py    # Triển khai HashMap và HashNode từ đầu
-│   └── models.py            # Chứa các lớp thực thể (Transaction, Category, ExpenseState...)
-├── data/
-│   ├── file_io.py           # Logic đọc/ghi file lưu trữ persistent custom format
-│   └── index_services.py    # Các lớp chỉ mục (MonthIndex, TransactionIndex, CategoryIndex)
-├── services/
-│   ├── category_manager.py  # Xử lý nghiệp vụ liên quan đến danh mục
-│   ├── transaction_manager.py# Xử lý nghiệp vụ giao dịch, kiểm tra ngân sách, gợi ý
-│   └── report_manager.py    # Tổng hợp số liệu và render giao diện báo cáo ASCII
-├── storage/                 # Thư mục chứa dữ liệu sinh ra trong quá trình chạy
-│   ├── data.txt             # File CSDL chính của hệ thống
-│   └── inputoutput.txt      # File log ghi lại lịch sử thao tác của người dùng
-└── main.py                  # Điểm neo khởi chạy ứng dụng CLI, chứa cấu trúc Menu
+├── core/               # Cấu trúc dữ liệu lõi và mô hình thực thể
+├── services/           # Tầng điều phối và logic nghiệp vụ tài chính
+├── data/               # Tầng cơ chế chỉ mục và đọc/ghi dữ liệu
+├── storage/            # Cơ sở dữ liệu vật lý dưới dạng file văn bản
+├── tests/              # Hệ thống kiểm thử toàn diện
+└── main.py             # Điểm chạy ứng dụng và điều hướng CLI
 
 ```
 
+### 1. Tầng Dữ Liệu Cốt Lõi (`/core`)
+
+Chịu trách nhiệm định nghĩa các cấu trúc lưu trữ nguyên thủy và các thực thể nghiệp vụ cốt lõi:
+
+* 
+**`data_structure.py`**: Triển khai cấu trúc **HashMap** tùy biến sử dụng phương pháp **Separate Chaining** (Linked List) để xử lý va chạm. Tự động mở rộng kích thước bảng (`__rehash`) khi hệ số tải vượt ngưỡng lý tưởng `load_factor > 0.75`. Hỗ trợ các Magic Methods (`__setitem__`, `__getitem__`, `__contains__`, `__delitem__`) giúp thao tác cú pháp tự nhiên như Dictionary mặc định.
+
+
+* 
+**`models.py`**: Định nghĩa mô hình trạng thái tài chính. Sử dụng lớp `MonthData` để đóng gói trạng thái danh mục (`category_states`) và danh sách giao dịch (`transactions`) theo từng lát cắt thời gian tháng. Tận dụng kế thừa qua lớp cha `CategoryState` kết hợp các lớp con `IncomeState` và `ExpenseState` để tối ưu hóa việc cập nhật dòng tiền.
+
+
+
+### 2. Tầng Nghiệp Vụ Tài Chính (`/services`)
+
+Nơi tập trung toàn bộ các quy tắc và logic xử lý luồng tiền:
+
+* 
+**`category_manager.py` (`CategoryManager` / `CategoryFinance`)**: Quản lý vòng đời danh mục thu/chi, kiểm soát chặt chẽ hạn mức (limit) và áp dụng cơ chế xóa mềm (**Soft Delete** - `is_active = False`) để bảo toàn dữ liệu lịch sử.
+
+
+* 
+**`transaction_manager.py` (`FinanceManager`)**: Bộ điều phối trung tâm xử lý các tác vụ CRUD giao dịch phức tạp, tự động dịch chuyển giao dịch giữa các tháng/danh mục, đồng thời tích hợp tính năng gợi ý danh mục thông minh dựa trên lịch sử ghi chú (`suggest_category_by_note`).
+
+
+* 
+**`report_manager.py` (`ReportManager`)**: Tổng hợp dữ liệu tài chính theo Ngày, Tháng, Năm hoặc $K$ tháng gần nhất, hỗ trợ kết xuất báo cáo trực quan bằng đồ họa chữ (**ASCII chart**) kèm bộ lọc cảnh báo vượt hạn mức.
+
+
+
+### 3. Tầng Chỉ Mục & Lưu Trữ (`/data` & `/storage`)
+
+Đảm bảo hiệu năng truy vấn cao và duy trì trạng thái bền vững của dữ liệu:
+
+* 
+**`index_services.py`**: Hoạt động như một bộ Index Database thực thụ. `MonthIndex` quản lý các khóa thời gian kiểu `"YYYY-MM"`, trong khi `TransactionMap` giúp định vị nhanh tháng của giao dịch bất kỳ với độ phức tạp $O(1)$. Điểm sáng là `TransactionIndex` ứng dụng **Tìm kiếm nhị phân (Binary Search)** để chèn và lọc giao dịch theo ngày một cách tối ưu.
+
+
+* 
+**`file_io.py`**: Đóng vai trò Persistence Layer. Thực hiện tuần tự hóa (Serialization) dữ liệu ra định dạng file văn bản thuần tùy biến thông qua các thẻ phân vùng (`BEGIN_CATEGORIES`, `END_CATEGORIES`,...) và phân tách bằng dấu `|`. Cơ chế xử lý chuỗi an toàn tự động escape ký tự đặc biệt (`|` thành `\|` và xuống dòng thành `\n`). Hàm `load_data` chịu trách nhiệm tự động tính toán lại và nạp dòng tiền vào đúng các State khi khởi chạy.
+
+
+* 
+**`/storage`**: Chứa cơ sở dữ liệu vật lý `data.txt` và tệp kịch bản kiểm thử/nhật ký log mẫu `inputoutput.txt`.
+
+
+
+### 4. Điểm Điều Phối Trung Tâm (`main.py`)
+
+* Đóng vai trò là "nhà trưởng điều phối" toàn bộ vòng đời ứng dụng.
+
+
+* Thiết lập vòng lặp giao diện dòng lệnh (CLI Menu Loop) thân thiện.
+
+
+* Quản lý bẫy ngoại lệ tập trung (Exception Handling) để bảo vệ trải nghiệm người dùng, tránh gây crash hệ thống và tự động lưu/tải dữ liệu an toàn ở hai đầu vòng đời.
+
+
+
 ---
 
-## ⚙️ 4. HƯỚNG DẪN CÀI ĐẶT & KHỞI CHẠY (INSTALLATION & SETUP)
+## ⚡ Các Tính Năng Kỹ Thuật Nổi Bật (Technical Highlights)
 
-**Yêu cầu hệ thống trước khi cài đặt:**
+* 
+**Cấu trúc dữ liệu tự chế (Custom Data Structure)**: Đạt quyền kiểm soát hệ thống ở cấp độ thuật toán thấp nhất nhờ việc tự cài đặt HashMap Separate Chaining và danh sách liên kết.
 
-* Hệ điều hành: Windows, macOS, hoặc Linux.
-* Môi trường: Python 3.8 trở lên.
 
-**Các bước cài đặt chi tiết:**
+* 
+**Tối ưu hóa tìm kiếm nhị phân**: Duy trì danh sách giao dịch luôn có thứ tự theo thời gian, giúp các thao tác chèn mới (`add`), dịch chuyển ngày (`relocate`) hoặc lọc khoảng ngày đạt hiệu năng vượt trội so với duyệt tuần tự.
 
-1. **Clone repository về máy local:**
+
+* 
+**Mã hóa an toàn (Custom Serialization)**: Không phụ thuộc thư viện bên ngoài, tự định nghĩa cấu trúc phân vùng dữ liệu an toàn, chống phân rã cấu trúc dòng dữ liệu khi parse.
+
+
+
+---
+
+## 🧪 Hệ Thống Kiểm Thử Toàn Diện (`/tests`)
+
+Dự án đi kèm một bộ test suite vô cùng hoành tráng đảm bảo tính phòng vệ và độ ổn định cao:
+
+* 
+**`test_hashmap.py`**: Unit test chuyên sâu cho cấu trúc `HashMap`, kiểm thử biên độ va chạm (collision), hàm băm và cơ chế tự động tăng kích thước bảng (`rehash`).
+
+
+* 
+**`test_business_logic.py`**: Đảm bảo các quy tắc ràng buộc tài chính (hạn mức âm/dương, logic cộng trừ dòng tiền, dịch chuyển tháng) vận hành đúng thiết kế.
+
+
+* 
+**`test_blackbox.py`**: Kiểm thử hộp đen giả lập chuỗi hành vi thực tế của người dùng để nghiệm thu luồng đi tổng thể của dữ liệu.
+
+
+* 
+**`test_integration_stress.py`**: Kiểm thử tích hợp và kiểm thử áp lực (Stress Test) nhằm đánh giá độ "chịu nhiệt" của hệ thống khi dữ liệu phình to.
+
+
+* 
+**`gen_data.py`**: Bộ công cụ tự động sinh dữ liệu giả lập (Mock Data) số lượng lớn để phục vụ đắc lực cho Stress Test và File I/O.
+
+
+* 
+**`script.md`**: Tài liệu hướng dẫn phối hợp và các bước thực hiện kịch bản test manual.
+
+
+
+---
+
+## 🚀 Hướng Dẫn Cài Đặt và Sử Dụng
+
+### Yêu cầu hệ thống
+
+* Python 3.8 trở lên (Không yêu cầu thêm thư viện bên ngoài).
+
+### Cài đặt
+
+1. Clone dự án từ GitHub:
 ```bash
 git clone https://github.com/your-username/Personal-Expense-Management.git
 cd Personal-Expense-Management
@@ -72,16 +143,7 @@ cd Personal-Expense-Management
 ```
 
 
-2. **Khởi tạo cấu trúc lưu trữ:**
-Đảm bảo rằng thư mục `storage` đã tồn tại trong thư mục gốc của dự án để hệ thống có thể ghi file dữ liệu.
-```bash
-mkdir storage
-
-```
-
-
-3. **Khởi chạy ứng dụng:**
-Dự án không yêu cầu cài đặt gói phụ thuộc qua pip do sử dụng 100% thư viện chuẩn. Bạn chỉ cần chạy file chính:
+2. Khởi chạy ứng dụng:
 ```bash
 python main.py
 
@@ -89,242 +151,11 @@ python main.py
 
 
 
----
+### Chạy Kiểm Thử (Testing)
 
-## 🧪 5. HƯỚNG DẪN SỬ DỤNG & DEMO (USAGE)
+Để thực thi toàn bộ hệ thống kiểm thử tự động, sử dụng lệnh:
 
-Sau khi khởi chạy `main.py`, hệ thống sẽ hiển thị **MENU CHÍNH** trên terminal với số dư hiện tại. Người dùng tương tác bằng cách nhập các phím số tương ứng.
-
-**Ví dụ: Thêm một giao dịch mới**
-Từ Menu Chính, chọn `2` (Quản lý Giao dịch), sau đó chọn `1` (Thêm giao dịch).
-
-```text
-  -- THÊM GIAO DỊCH --
-  Số tiền (đ)      : 150000
-  Ngày (dd-mm-yyyy): 18-06-2026
-  Ghi chú          : An trua cung nhom
-  -- Danh sách Danh mục hiện có --
-   - An uong (expense)
-   - Luong (income)
-  Chọn danh mục (Nhập Tên): An uong
-  KẾT QUẢ: Thêm giao dịch thanh cong. (ID=TX20260618175200, So tien=150,000d, Ngay=18-06-2026)
+```bash
+python -m unittest discover -s tests
 
 ```
-
-Tất cả các thao tác (Prompt và Input) đều được hệ thống tự động ghi log vào file `storage/inputoutput.txt` để hỗ trợ quá trình gỡ lỗi.
-
----
-
-## 🗺️ 6. KIẾN TRÚC HỆ THỐNG & SƠ ĐỒ LỚP (ARCHITECTURE & OOP CLASS DIAGRAMS)
-
-Hệ thống được thiết kế theo mô hình hướng đối tượng phân lớp (Layered Architecture), tách biệt rõ ràng giữa cấu trúc dữ liệu cốt lõi, thực thể lưu trữ, dịch vụ chỉ mục tối ưu và tầng quản lý nghiệp vụ.
-
-### 📊 Sơ đồ lớp 
-```mermaid
-classDiagram
-    namespace core {
-        class HashNode {
-            +key
-            +value
-            +HashNode next
-            +__init__(key, value)
-        }
-        class HashMap {
-            -__TABLE_SIZE: int
-            -__buckets: list
-            -__count: int
-            +__init__()
-            -_pure_insert(key, value)
-            +insert(key, value)
-            +get(key)
-            +contains_key(key)
-            +remove_key(key)
-            +clear()
-            +keys()
-            +values()
-            +items()
-            +__setitem__(key, value)
-            +__getitem__(key)
-            +__contains__(key)
-            +__delitem__(key)
-            -__hash_function(key)
-            -__rehash()
-        }
-        class Transaction {
-            +transaction_id
-            +amount
-            +date
-            +category_id
-            +transaction_type
-            +note
-            +__init__(transaction_id, amount, date, category_id, transaction_type, note)
-        }
-        class Category {
-            +id
-            +name
-            +type
-            +limit
-            +is_active
-            +__init__(id, name, type, created_at, is_active, limit)
-            +set_limit(new_limit)
-            +deactivate()
-            +activate()
-        }
-        class CategoryState {
-            +Category category
-            +year
-            +month
-            +__init__(category, year, month)
-        }
-        class IncomeState {
-            +total_income
-            +__init__(category, year, month)
-            +update_transaction(old_amount, new_amount, mode)
-        }
-        class ExpenseState {
-            +limit
-            +total_expense
-            +__init__(category, year, month, limit)
-            +update_transaction(old_amount, new_amount, mode)
-            +set_limit(new_limit)
-        }
-        class MonthData {
-            +HashMap category_states
-            +list transactions
-            +__init__()
-        }
-    }
-
-    namespace data {
-        class CategoryIndex {
-            -_category_states
-            +__init__(month_data)
-            +get(category_id)
-            +exists(category_id)
-            +add(category_state)
-            +remove(category_id)
-        }
-        class MonthIndex {
-            +HashMap _months
-            +__init__()
-            -_get_key(year, month)
-            +get(year, month)
-            +exists(year, month)
-            +create(year, month)
-            +get_or_create(year, month)
-            +remove(year, month)
-        }
-        class TransactionIndex {
-            -_transactions
-            +__init__(month_data)
-            +find_by_id(transaction_id)
-            +get_transaction(transaction_id)
-            +find_by_category(category_id)
-            +find_by_amount(amount)
-            +find_by_note(keyword)
-            +find_by_date(date)
-            +add(transaction)
-            +relocate(transaction_id, new_date)
-            +remove(transaction_id)
-            +get_monthly_transactions(year, month)
-        }
-        class TransactionMap {
-            +HashMap _transactions
-            +__init__()
-            +get(transaction_id)
-            +exists(transaction_id)
-            +add(transaction_id, year, month)
-            +remove(transaction_id)
-        }
-    }
-
-    namespace services {
-        class CategoryManager {
-            +list categories
-            +__init__()
-            +add_category(category)
-            +find_by_id(categories, category_id)
-            +find_by_name(categories, name)
-            +find_by_type(categories, category_type)
-            +get(categories, category_id)
-            +get_active_categories()
-        }
-        class CategoryFinance {
-            +__init__()
-            +add_category(category)
-            +remove_category(category_id)
-            +update_category(category_id, new_name, new_type, new_limit, new_created_at)
-        }
-        class ReportManager {
-            +MonthIndex _month_index
-            +__init__(month_index)
-            +generate_monthly_report(year, month)
-            +generate_daily_report(year, month, day)
-            +generate_yearly_report(year)
-            +generate_k_months_report(k_months)
-            +get_k_months_transactions(k_months)
-        }
-        class FinanceManager {
-            +MonthIndex _month_index
-            +TransactionMap _transaction_map
-            +CategoryFinance _category_manager
-            +__init__(category_manager)
-            -_get_or_create_category_state(category_index, category, year, month)
-            -_is_state_empty(state)
-            +get_total_balance()
-            +set_monthly_budget(category_id, year, month, new_limit)
-            +suggest_category_by_note(note)
-            -_check_transaction_id(transaction_id)
-            -_check_amount(amount)
-            -_parse_and_validate_date(date_str)
-            -_check_category(category_id)
-            +add_transaction(transaction_id, amount, date, category_id, note)
-            +delete_transaction(transaction_id)
-            +update_transaction(transaction_id, amount, date, category_id, note)
-        }
-    }
-
-    HashMap "1" *-- "many" HashNode : contains
-    IncomeState --|> CategoryState : inherits
-    ExpenseState --|> CategoryState : inherits
-    CategoryState "many" *-- "1" Category : has
-    MonthData "1" *-- "1" HashMap : has
-    MonthData "1" *-- "many" Transaction : has
-    
-    CategoryIndex "1" o-- "many" CategoryState : manages
-    MonthIndex "1" *-- "1" HashMap : uses
-    TransactionIndex "1" o-- "many" Transaction : manages
-    TransactionMap "1" *-- "1" HashMap : uses
-
-    CategoryManager "1" o-- "many" Category : manages
-    CategoryFinance --|> CategoryManager : inherits
-    ReportManager "1" o-- "1" MonthIndex : uses
-    FinanceManager "1" *-- "1" MonthIndex : has
-    FinanceManager "1" *-- "1" TransactionMap : has
-    FinanceManager "1" o-- "1" CategoryFinance : uses
-
-```
-
-
-```
-
-### 💡 Điểm cốt lõi của thiết kế hướng đối tượng trong dự án:
-
-1. **Cô lập dữ liệu theo thời gian (`MonthData` & `CategoryState`):** Hệ thống không ghi đè trực tiếp các thuộc tính tích lũy lên cấu hình danh mục gốc `Category`. Thay vào đó, mỗi tháng ứng với một đối tượng `MonthData`, chứa một bảng băm riêng để map từ ID sang `CategoryState` (`IncomeState` hoặc `ExpenseState`). Điều này giúp bảo toàn ngân sách lịch sử một cách hoàn hảo.
-2. **Liên kết tối ưu hóa bộ nhớ (`TransactionMap`):** Nhờ việc duy trì một cấu trúc `HashMap` lưu trữ vị trí nhanh dạng `ID -> (Year, Month)`, tầng logic nghiệp vụ có thể thực hiện tìm kiếm, chỉnh sửa và xóa phần tử bất kỳ theo mã ID với độ phức tạp lý thuyết đạt $O(1)$ thay vì phải duyệt tuần tự toàn bộ dữ liệu qua các năm tháng.
-
----
-
-## 👥 7. THÀNH VIÊN THAM GIA & ĐÓNG GÓP (CONTRIBUTORS)
-
-| Họ và Tên | Vai trò / Chuyên môn | Mã số sinh viên |
-| --- | --- | --- |
-| **Phạm Anh Phú** | Phân tích và phát triển hệ thống  | 202418960 |
-| **Mai Đức Hiếu** | Phát triển và hoàn thiện phần mềm | 202418896 |
-| **Trần Hoàng Đức Linh** | Tài liệu và báo cáo | 202418932 |
-
----
-
-## 📄 8. GIẤY PHÉP (LICENSE)
-
-Dự án này được phân phối dưới giấy phép **MIT License**. Bạn được tự do sử dụng, chỉnh sửa và chia sẻ lại mã nguồn này theo quy định bản quyền.
