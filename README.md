@@ -1,160 +1,187 @@
-
----
-
-# Personal Expense Management
-
-Một ứng dụng quản lý chi tiêu cá nhân mạnh mẽ, được xây dựng trên nền tảng ngôn ngữ Python thuần với tư duy cấu trúc dữ liệu giải thuật nâng cao và mô hình kiến trúc sạch (Clean Architecture). Thay vì phụ thuộc vào các cấu trúc dữ liệu có sẵn của Python như `dict` hay `list`, dự án tự triển khai các bảng băm (HashMap) và cơ chế chỉ mục chuyên biệt để tối ưu hóa hiệu năng.
-
----
-
-## 🏛️ Kiến Trúc Hệ Thống (System Architecture)
-
-Dự án tuân thủ nghiêm ngặt nguyên lý phân rã trách nhiệm (Separation of Concerns), chia hệ thống thành các tầng xử lý riêng biệt:
-
-### 1. Tầng Dữ Liệu Cốt Lõi (`/core`)
-
-Chịu trách nhiệm định nghĩa các cấu trúc lưu trữ nguyên thủy và các thực thể nghiệp vụ cốt lõi:
-
-* 
-**`data_structure.py`**: Triển khai cấu trúc HashMap tùy biến sử dụng phương pháp Separate Chaining (Linked List) để xử lý va chạm. Hệ thống tự động mở rộng kích thước bảng (`__rehash`) khi hệ số tải vượt ngưỡng lý tưởng $\text{load\_factor} > 0.75$. Đồng thời hỗ trợ các Magic Methods (`setitem`, `getitem`, `contains`, `delitem`) giúp thao tác cú pháp tự nhiên như Dictionary mặc định.
-
-
-* 
-**`models.py`**: Định nghĩa mô hình trạng thái tài chính của ứng dụng. Sử dụng lớp `MonthData` để đóng gói trạng thái danh mục (`category_states`) và danh sách giao dịch (`transactions`) theo từng lát cắt thời gian tháng. Tận dụng kế thừa qua lớp cha `CategoryState` kết hợp các lớp con `IncomeState` và `ExpenseState` để tối ưu hóa việc cập nhật dòng tiền.
-
-
-
-### 2. Tầng Nghiệp Vụ Tài Chính (`/services`)
-
-Nơi tập trung toàn bộ các quy tắc và logic xử lý luồng tiền:
-
-* 
-**`category_manager.py`** (`CategoryManager` / `CategoryFinance`): Quản lý vòng đời danh mục thu/chi, kiểm soát chặt chẽ hạn mức (limit) và áp dụng cơ chế xóa mềm (Soft Delete - `is_active = False`) để bảo toàn dữ liệu lịch sử.
-
-
-* 
-**`transaction_manager.py`** (`FinanceManager`): Bộ điều phối trung tâm xử lý các tác vụ CRUD giao dịch phức tạp, tự động dịch chuyển giao dịch giữa các tháng/danh mục, đồng thời tích hợp tính năng gợi ý danh mục thông minh dựa trên lịch sử ghi chú (`suggest_category_by_note`).
-
-
-* 
-**`report_manager.py`** (`ReportManager`): Tổng hợp dữ liệu tài chính theo Ngày, Tháng, Năm hoặc $K$ tháng gần nhất, hỗ trợ kết xuất báo cáo trực quan bằng đồ họa chữ (ASCII chart) kèm bộ lọc cảnh báo vượt hạn mức.
-
-
-
-### 3. Tầng Chỉ Mục & Lưu Trữ (`/data` & `/storage`)
-
-Đảm bảo hiệu năng truy vấn cao và duy trì trạng thái bền vững của dữ liệu:
-
-* 
-**`index_services.py`**: Hoạt động như một bộ Index Database thực thụ để tối ưu tốc độ. Lớp `MonthIndex` quản lý các khóa thời gian kiểu "YYYY-MM", trong khi `TransactionMap` giúp định vị nhanh tháng của giao dịch bất kỳ với độ phức tạp $O(1)$. Điểm sáng là `TransactionIndex` ứng dụng Tìm kiếm nhị phân (Binary Search) để chèn và lọc giao dịch theo ngày một cách tối ưu.
-
-
-* 
-**`file_io.py`**: Đóng vai trò Persistence Layer cho toàn hệ thống. Thực hiện tuần tự hóa (Serialization) dữ liệu ra định dạng file văn bản thuần tùy biến thông qua các thẻ phân vùng (`BEGIN_CATEGORIES`, `END_CATEGORIES`,...) và phân tách bằng dấu `|`. Cơ chế xử lý chuỗi an toàn tự động escape ký tự đặc biệt (`|` thành `\|` và xuống dòng thành `\n`). Hàm `load_data` chịu trách nhiệm tự động tính toán lại và nạp dòng tiền vào đúng các State khi khởi chạy.
-
-
-* 
-**`/storage`**: Chứa cơ sở dữ liệu vật lý `data.txt` và tệp kịch bản kiểm thử/nhật ký log mẫu `inputoutput.txt`.
-
-
-
-### 4. Điểm Điều Phối Trung Tâm (`main.py`)
-
-* Đóng vai trò là "nhà trưởng điều phối" toàn bộ vòng đời ứng dụng.
-
-
-* Thiết lập vòng lặp giao diện dòng lệnh (CLI Menu Loop) thân thiện và tường minh.
-
-
-* Quản lý bẫy ngoại lệ tập trung (Exception Handling) để bảo vệ trải nghiệm người dùng, tránh gây crash hệ thống và tự động lưu/tải dữ liệu an toàn ở hai đầu vòng đời.
-
-
-
----
-
-## ⚡ Các Tính Năng Kỹ Thuật Nổi Bật (Technical Highlights)
-
-* 
-**Cấu trúc dữ liệu tự chế (Custom Data Structure)**: Đạt quyền kiểm soát hệ thống ở cấp độ thuật toán thấp nhất nhờ việc tự cài đặt HashMap Separate Chaining và danh sách liên kết.
-
-
-* 
-**Tối ưu hóa tìm kiếm nhị phân**: Duy trì danh sách giao dịch luôn có thứ tự theo thời gian, giúp các thao tác chèn mới (add), dịch chuyển ngày (relocate) hoặc lọc khoảng ngày đạt hiệu năng vượt trội so với duyệt tuần tự.
-
-
-* 
-**Mã hóa an toàn (Custom Serialization)**: Không phụ thuộc thư viện bên ngoài, tự định nghĩa cấu trúc phân vùng dữ liệu an toàn, chống phân rã cấu trúc dòng dữ liệu khi parse.
-
-
-
----
-
-## 🧪 Hệ Thống Kiểm Thử Toàn Diện (`/tests`)
-
-Dự án đi kèm một bộ test suite vô cùng hoành tráng đảm bảo tính phòng vệ và độ ổn định cao:
-
-* 
-**`test_hashmap.py`**: Unit test chuyên sâu cho cấu trúc HashMap, kiểm thử biên độ va chạm (collision), hàm băm và cơ chế tự động tăng kích thước bảng (rehash).
-
-
-* 
-**`test_business_logic.py`**: Đảm bảo các quy tắc ràng buộc tài chính (hạn mức âm/dương, logic cộng trừ dòng tiền, dịch chuyển tháng) vận hành đúng thiết kế.
-
-
-* 
-**`test_blackbox.py`**: Kiểm thử hộp đen giả lập chuỗi hành vi thực tế của người dùng để nghiệm thu luồng đi tổng thể của dữ liệu.
-
-
-* 
-**`test_integration_stress.py`**: Kiểm thử tích hợp và kiểm thử áp lực (Stress Test) nhằm đánh giá độ "chịu nhiệt" của hệ thống khi dữ liệu phình to.
-
-
-* 
-**`gen_data.py`**: Bộ công cụ tự động sinh dữ liệu giả lập (Mock Data) số lượng lớn để phục vụ đắc lực cho Stress Test và File I/O.
-
-
-* 
-**`script.md`**: Tài liệu hướng dẫn phối hợp và các bước thực hiện kịch bản test manual.
-
-
-
----
-
-## 🚀 Hướng Dẫn Cài Đặt và Sử Dụng
-
-### Yêu cầu hệ thống
-
-* Python 3.8 trở lên (Không yêu cầu thêm thư viện bên ngoài).
-
-
-
-### Cài đặt
-
-1. Clone dự án từ GitHub:
-
-
-```bash
-git clone https://github.com/yourusername/Personal-Expense-Management.git
-cd Personal-Expense-Management
+```markdown
+# Quản lý Chi tiêu Cá nhân (Personal Finance Manager)
+
+Dự án môn học **Kỹ thuật lập trình** – xây dựng ứng dụng quản lý thu chi cá nhân bằng Python, hoạt động trên giao diện dòng lệnh (CLI). Chương trình tự cài đặt cấu trúc dữ liệu **HashMap** (bảng băm với dây chuyền) thay vì sử dụng `dict` có sẵn, kết hợp với các chỉ mục và thuật toán tối ưu để quản lý giao dịch, danh mục, ngân sách và báo cáo.
+
+## Mục lục
+
+- [Tính năng chính](#tính-năng-chính)
+- [Cấu trúc thư mục](#cấu-trúc-thư-mục)
+- [Yêu cầu hệ thống](#yêu-cầu-hệ-thống)
+- [Cài đặt và chạy](#cài-đặt-và-chạy)
+- [Hướng dẫn sử dụng](#hướng-dẫn-sử-dụng)
+  - [Menu chính](#menu-chính)
+  - [Quản lý danh mục](#quản-lý-danh-mục)
+  - [Quản lý giao dịch](#quản-lý-giao-dịch)
+  - [Báo cáo thống kê](#báo-cáo-thống-kê)
+  - [Nhập CSV](#nhập-csv)
+- [Kiểm thử](#kiểm-thử)
+  - [Chạy toàn bộ bộ test](#chạy-toàn-bộ-bộ-test)
+  - [Cấu trúc test case](#cấu-trúc-test-case)
+- [Cấu trúc dữ liệu & Kỹ thuật lập trình](#cấu-trúc-dữ-liệu--kỹ-thuật-lập-trình)
+- [Thông tin nhóm](#thông-tin-nhóm)
+- [Giấy phép](#giấy-phép)
+
+## Tính năng chính
+
+- **Quản lý danh mục** (thêm, sửa, xoá mềm, phục hồi) với ràng buộc loại thu/chi và hạn mức.
+- **Quản lý giao dịch** (thêm, sửa, xoá, tìm kiếm theo từ khoá, gợi ý danh mục theo ghi chú).
+- **Cảnh báo vượt ngân sách** tự động khi thêm hoặc chỉnh sửa giao dịch làm tổng chi vượt hạn mức tháng.
+- **Báo cáo thống kê** theo ngày, tháng, năm, K tháng gần nhất; kèm biểu đồ tỷ trọng bằng ký tự ASCII.
+- **Nhập giao dịch hàng loạt** từ tệp CSV với cơ chế kiểm tra lỗi 2 lớp.
+- **Lưu trữ dữ liệu** ra tệp văn bản phẳng (`storage/data.txt`) và khôi phục khi khởi động.
+- **Tự cài đặt HashMap** với phương pháp dây chuyền (separate chaining) và tự động mở rộng (rehash) khi quá tải.
+
+## Cấu trúc thư mục
 
 ```
-
-
-2. Khởi chạy ứng dụng:
-
-
-```bash
-python main.py
-
+.
+├── core/
+│   ├── data_structure.py         # HashMap, HashNode tự cài đặt
+│   └── models.py                 # Lớp dữ liệu: Transaction, Category, MonthData, IncomeState, ExpenseState
+├── data/
+│   ├── file_io.py                # Đọc/ghi file text (serialize/deserialize)
+│   └── index_services.py         # Chỉ mục: MonthIndex, TransactionIndex, CategoryIndex, TransactionMap
+├── services/
+│   ├── category_manager.py       # Quản lý danh mục (CRUD, xoá mềm)
+│   ├── transaction_manager.py    # Điều phối giao dịch, kiểm tra ngân sách
+│   └── report_manager.py         # Báo cáo thống kê, biểu đồ ASCII
+├── storage/
+│   ├── data.txt                  # Cơ sở dữ liệu phẳng (tự động tạo)
+│   └── inputoutput.txt           # Nhật ký luồng CLI (tự động tạo)
+├── tests/
+│   ├── __init__.py
+│   ├── test_hashmap.py           # Kiểm thử hộp trắng HashMap
+│   ├── test_blackbox.py          # Kiểm thử hộp đen nhập liệu
+│   ├── test_business_logic.py    # Kiểm thử logic nghiệp vụ
+│   └── test_integration_stress.py# Kiểm thử tích hợp & tải
+├── gen_data.py                   # Sinh dữ liệu lớn ngẫu nhiên (hỗ trợ stress test)
+├── transactions_stress_test.csv  # Tệp CSV dữ liệu mẫu 10.000 dòng
+├── script.md                     # Tài liệu đặc tả kiểm thử
+├── main.py                       # Điểm khởi chạy chương trình (vòng lặp menu chính)
+└── README.md                     # Tài liệu dự án
 ```
 
+## Yêu cầu hệ thống
 
+- **Python** 3.10 trở lên (chỉ sử dụng thư viện chuẩn, không cần cài thêm gói ngoài).
+- Hệ điều hành: Windows, Linux, macOS đều hỗ trợ.
+- Không yêu cầu cơ sở dữ liệu ngoài – dữ liệu được lưu dưới dạng tệp văn bản thuần tuý.
 
-### Chạy Kiểm Thử (Testing)
+## Cài đặt và chạy
 
-Để thực thi toàn bộ hệ thống kiểm thử tự động, sử dụng lệnh:
+1. **Tải mã nguồn** (clone hoặc giải nén) vào một thư mục.
+2. Mở terminal (Command Prompt, PowerShell, Terminal) và điều hướng vào thư mục dự án.
+3. Chạy chương trình:
+   ```bash
+   python main.py
+   ```
+   Hoặc:
+   ```bash
+   python3 main.py
+   ```
+4. Ứng dụng sẽ khởi động, tự động nạp dữ liệu từ `storage/data.txt` (nếu có) và hiển thị menu chính.
+
+## Hướng dẫn sử dụng
+
+### Menu chính
+
+```
+================== MENU CHÍNH ==================
+>> SỐ DƯ HIỆN TẠI: 0 đ <<
+1. Quản lý Danh mục
+2. Quản lý Giao dịch
+3. Báo cáo thống kê
+4. Nhập giao dịch từ CSV
+0. Thoát và lưu dữ liệu
+```
+
+Nhập số tương ứng rồi nhấn Enter để chọn chức năng.
+
+### Quản lý danh mục
+
+Menu con cho phép:
+- Xem danh sách danh mục (kèm trạng thái hoạt động).
+- Thêm danh mục mới (nhập ID, tên, loại `income`/`expense`, hạn mức nếu là chi tiêu).
+- Sửa danh mục (đổi tên, loại, hạn mức).
+- Xoá mềm danh mục (dừng sử dụng nhưng vẫn giữ lại lịch sử giao dịch).
+
+*Lưu ý:* Danh mục `income` không cần hạn mức (limit = 0), danh mục `expense` bắt buộc có hạn mức dương.
+
+### Quản lý giao dịch
+
+Menu con cho phép:
+- Thêm giao dịch thủ công (nhập ID, số tiền, ngày `dd-mm-yyyy`, mã danh mục, ghi chú).
+- Sửa giao dịch (thay đổi số tiền, ngày, danh mục, ghi chú) – tự động cập nhật số dư và kiểm tra ngân sách.
+- Xoá giao dịch (xóa vĩnh viễn, cập nhật lại tổng thu/chi).
+- Tìm kiếm giao dịch theo từ khoá trong ghi chú.
+- Xem toàn bộ giao dịch của một tháng cụ thể.
+
+### Báo cáo thống kê
+
+- Báo cáo theo tháng: hiển thị tổng thu, tổng chi, số dư, biểu đồ tỷ trọng chi tiêu giữa các danh mục (bằng ký tự `■`), và danh sách các danh mục vượt hạn mức.
+- Báo cáo theo năm: tương tự nhưng tổng hợp cả 12 tháng.
+
+### Nhập CSV
+
+Chức năng nhập giao dịch hàng loạt từ tệp CSV với cấu trúc cột:
+
+```
+Transaction_ID|Date|Category_ID|Category_Name|Type|Amount|Note
+```
+
+Ví dụ:
+```
+TX001|15-06-2025|C01|Ăn uống|expense|150000|Tiền ăn trưa
+```
+
+Chương trình tự động kiểm tra:
+- **Lớp 1 (cú pháp):** đủ 7 cột, số tiền là số hợp lệ, ngày đúng định dạng `dd-mm-yyyy`.
+- **Lớp 2 (nghiệp vụ):** danh mục tồn tại và đang hoạt động, số tiền > 0, ngày không ở tương lai, ID không trùng.
+
+Các dòng lỗi sẽ bị bỏ qua và hiển thị nguyên nhân, không làm gián đoạn quá trình import.
+
+## Kiểm thử
+
+Dự án đi kèm bộ kiểm thử gồm **18 test case**, chia làm 4 nhóm:
+- **White-box** (WT-01 → WT-03): kiểm tra HashMap tự cài đặt.
+- **Black-box** (BT-01 → BT-03): kiểm tra nhập liệu menu CLI.
+- **Business Logic** (LT-01 → LT-08): kiểm tra nghiệp vụ giao dịch, ngân sách, danh mục, báo cáo.
+- **Integration & Stress** (IT-01 → IT-03, ST-01): kiểm tra đọc/ghi file và tải 10.000 giao dịch.
+
+### Chạy toàn bộ bộ test
 
 ```bash
-python -m unittest discover tests
+python -m unittest discover -s tests -p "test_*.py" -v
+```
 
+Kết quả mong đợi: tất cả 18 test case đều **PASS**.
+
+### Cấu trúc test case
+
+Xem chi tiết từng test case trong tài liệu `script.md` hoặc trực tiếp trong các file `tests/test_*.py`.
+
+## Cấu trúc dữ liệu & Kỹ thuật lập trình
+
+- **HashMap tự cài đặt**: mảng bucket (kích thước 1024), xử lý va chạm bằng danh sách liên kết đơn (separate chaining), tự động rehash khi hệ số tải > 0.75.
+- **Hàm băm**: polynomial rolling với hằng số 31, modulo kích thước bảng.
+- **Chỉ mục dữ liệu**:
+  - `MonthIndex`: băm theo chuỗi `"YYYY-MM"` → `MonthData`.
+  - `TransactionIndex`: danh sách giao dịch trong tháng, sắp xếp theo ngày, chèn bằng **tìm kiếm nhị phân** (O(log N)).
+  - `CategoryIndex`: băm `category_id` → `IncomeState`/`ExpenseState`.
+  - `TransactionMap`: băm `transaction_id` → `(year, month)` để định vị nhanh giao dịch toàn cục.
+- **Xóa mềm (Soft Delete)**: danh mục bị xóa chỉ chuyển cờ `is_active = False`, không xóa vật lý, cho phép phục hồi và giữ toàn vẹn lịch sử.
+- **Kiểm soát lỗi 2 lớp**: khi nhập CSV, lớp cú pháp lọc lỗi định dạng, lớp nghiệp vụ kiểm tra ràng buộc tài chính.
+- **Lưu trữ phẳng**: dữ liệu được tuần tự hóa thành văn bản, dùng cơ chế escape ký tự đặc biệt (`|` → `\|`, `\n` → `\\n`) để đảm bảo toàn vẹn.
+
+## Thông tin nhóm
+
+
+| Họ tên | MSSV | Vai trò / Công việc |
+|--------|------|---------------------|
+| ...    | ...  | ...                 |
+
+## Giấy phép
+
+Dự án được thực hiện cho mục đích học tập thuộc môn **Kỹ thuật lập trình**. Mã nguồn có thể được sử dụng tự do cho mục đích tham khảo, không bảo đảm cho mục đích thương mại.
 ```
