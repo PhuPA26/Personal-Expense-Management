@@ -33,8 +33,8 @@ Dự án được xây dựng dựa trên nguyên lý phân rã trách nhiệm (
 │   ├── test_hashmap.py            # Unit Test hộp trắng cấu trúc HashMap
 │   ├── test_blackbox.py           # Kiểm thử hộp đen giao diện nhập liệu
 │   ├── test_business_logic.py     # Kiểm thử logic ràng buộc dòng tiền nghiệp vụ
-│   └── test_integration_stress.py # Kiểm thử tích hợp & Tải cực đại (Stress Test)
-├── gen_data.py                    # Công cụ sinh Mock Data tự động (Phục vụ stress test)
+│   ├── test_integration_stress.py # Kiểm thử tích hợp & Tải cực đại (Stress Test)
+|   └──gen_data.py                 # Công cụ sinh Mock Data tự động (Phục vụ stress test)
 ├── main.py                        # Nhà trưởng điều phối vòng đời ứng dụng (Global Exception CLI Loop)
 └── README.md                      # Tài liệu hướng dẫn & Đặc tả kỹ thuật dự án
 
