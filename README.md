@@ -16,7 +16,7 @@ Dự án được xây dựng dựa trên nguyên lý phân rã trách nhiệm (
 
 ```text
 .
-├── core/                  # Tầng dữ liệu cốt lõi (Mô hình thực thể & CTDL tự chế)
+├── core/                  # Tầng dữ liệu cốt lõi (Mô hình thực thể & CTDL tự cài đặt)
 │   ├── data_structure.py  # HashMap, HashNode tự cài đặt qua Separate Chaining
 │   └── models.py          # Khối trạng thái tài chính (Transaction, MonthData, State)
 ├── data/                  # Tầng lưu trữ & Chỉ mục (Database Indexing & Persistence)
