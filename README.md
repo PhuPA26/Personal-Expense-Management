@@ -16,27 +16,27 @@ Dự án được xây dựng dựa trên nguyên lý phân rã trách nhiệm (
 
 ```text
 .
-├── core/                  # Tầng dữ liệu cốt lõi (Mô hình thực thể & CTDL tự cài đặt)
-│   ├── data_structure.py  # HashMap, HashNode tự cài đặt qua Separate Chaining
-│   └── models.py          # Khối trạng thái tài chính (Transaction, MonthData, State)
-├── data/                  # Tầng lưu trữ & Chỉ mục (Database Indexing & Persistence)
-│   ├── file_io.py         # Bộ mã hóa/Giải mã văn bản phẳng (Escape String Layer)
-│   └── index_services.py  # Chỉ mục hiệu năng cao (Binary Search Index, O(1) Map)
-├── services/              # Tầng nghiệp vụ (Bảo toàn luồng tiền & Tính toán ràng buộc)
-│   ├── category_manager.py# Điều phối danh mục (Hạn mức, Soft Delete)
-│   ├── transaction_manager.py # Quản lý CRUD giao dịch, kiểm soát ngân sách tháng
-│   └── report_manager.py  # Công cụ kết xuất báo cáo & Render đồ họa chữ ASCII
-├── storage/               # Phân vùng vật lý lưu trữ dữ liệu bền vững
-│   ├── data.txt           # Cơ sở dữ liệu văn bản phẳng hóa
-│   └── inputoutput.txt    # Nhật ký luồng hoạt động CLI
-├── tests/                 # Hệ thống phòng vệ & Cam kết chất lượng mã nguồn
-│   ├── test_hashmap.py    # Unit Test hộp trắng cấu trúc HashMap
-│   ├── test_blackbox.py   # Kiểm thử hộp đen giao diện nhập liệu
-│   ├── test_business_logic.py # Kiểm thử logic ràng buộc dòng tiền nghiệp vụ
+├── core/                          # Tầng dữ liệu cốt lõi (Mô hình thực thể & CTDL tự cài đặt)
+│   ├── data_structure.py          # HashMap, HashNode tự cài đặt qua Separate Chaining
+│   └── models.py                  # Khối trạng thái tài chính (Transaction, MonthData, State)
+├── data/                          # Tầng lưu trữ & Chỉ mục (Database Indexing & Persistence)
+│   ├── file_io.py                 # Bộ mã hóa/Giải mã văn bản phẳng (Escape String Layer)
+│   └── index_services.py          # Chỉ mục hiệu năng cao (Binary Search Index, O(1) Map)
+├── services/                      # Tầng nghiệp vụ (Bảo toàn luồng tiền & Tính toán ràng buộc)
+│   ├── category_manager.py        # Điều phối danh mục (Hạn mức, Soft Delete)
+│   ├── transaction_manager.py     # Quản lý CRUD giao dịch, kiểm soát ngân sách tháng
+│   └── report_manager.py          # Công cụ kết xuất báo cáo & Render đồ họa chữ ASCII
+├── storage/                       # Phân vùng vật lý lưu trữ dữ liệu bền vững
+│   ├── data.txt                   # Cơ sở dữ liệu văn bản phẳng hóa
+│   └── inputoutput.txt            # Nhật ký luồng hoạt động CLI
+├── tests/                         # Hệ thống phòng vệ & Cam kết chất lượng mã nguồn
+│   ├── test_hashmap.py            # Unit Test hộp trắng cấu trúc HashMap
+│   ├── test_blackbox.py           # Kiểm thử hộp đen giao diện nhập liệu
+│   ├── test_business_logic.py     # Kiểm thử logic ràng buộc dòng tiền nghiệp vụ
 │   └── test_integration_stress.py # Kiểm thử tích hợp & Tải cực đại (Stress Test)
-├── gen_data.py            # Công cụ sinh Mock Data tự động (Phục vụ stress test)
-├── main.py                # Nhà trưởng điều phối vòng đời ứng dụng (Global Exception CLI Loop)
-└── README.md              # Tài liệu hướng dẫn & Đặc tả kỹ thuật dự án
+├── gen_data.py                    # Công cụ sinh Mock Data tự động (Phục vụ stress test)
+├── main.py                        # Nhà trưởng điều phối vòng đời ứng dụng (Global Exception CLI Loop)
+└── README.md                      # Tài liệu hướng dẫn & Đặc tả kỹ thuật dự án
 
 ```
 
